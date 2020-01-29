@@ -2,10 +2,10 @@
 Task: Learn the JSON library
 Estimated Time: 0.5h
 Target Deadline: 3:30pm, Jan 29
-Actual Time:
-Actual Delivery:
-Commit ID:
-Comments:
+Actual Time: 1h
+Actual Delivery: 4:06pm, Jan 29
+Commit ID: 
+Comments: Get delayed by 568 bug.
 
 2.
 Task: implement and test an end-to-end solution that supports getClassNames, getSourceCode and createAllClasses (one class with one field)
