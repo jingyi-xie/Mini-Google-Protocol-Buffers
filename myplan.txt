@@ -3,120 +3,91 @@ Task: Learn the JSON library
 Estimated Time: 0.5h
 Target Deadline: 3:30pm, Jan 29
 Actual Time: 1h
-Actual Delivery: 4:06pm, Jan 29
-Commit ID: 
-Comments: Get delayed by 568 bug.
+Actual Delivery: 5:57pm, Jan 29
+Commit ID: 3a780f9cc6b471a8dfe4c438b246918670615240
+Comments: Get delayed by 568 bug. In the future I should better balance between differnet courses.
+
 
 2.
-Task: implement and test an end-to-end solution that supports getClassNames, getSourceCode and createAllClasses (one class with one field)
+Task: get class name, field name and field type of one class with one field
 Estimated Time: 2h
-Target Deadline: 6pm, Jan 29
-Actual Time:
-Actual Delivery:
+Target Deadline: 5pm, Jan 30
+Actual Time: 1.5h
+Actual Delivery: 12:03pm, Jan 30
 Commit ID:
-Comments:
+Comments: The old task was to “implement and test an end-to-end solution that supports getClassNames,
+getSourceCode and createAllClasses (one class with one field)”. This took longer than expected because
+I needed to figure out how to store the read data and I had some problems when trying to print out the
+data. So I broke down this task into two. 
 
 3.
-Task: Work on getClassNames method for multiple classes, and testing
-Estimated Time: 1h
-Target Deadline:8pm, Jan 29
+Task: implement and test an end-to-end solution that supports getClassNames, getSourceCode and
+createAllClasses (one class with one field)
+Estimated Time: 2h
+Target Deadline: 11:30pm, Jan 30
 Actual Time:
 Actual Delivery:
 Commit ID:
-Comments:
+Comments: This took longer than expected because I needed to figure out how to store the read data and
+I had some problems when trying to print out the data. This task is actually too large to finish in
+the previous deadline, so I changed it.
 
 4.
-Task: Work on getSourceCode: only non-array fields, and testing
+Task: Work on getClassNames method for multiple classes, and testing
 Estimated Time: 2.5h
-Target Deadline: 11:30pm, Jan 29
+Target Deadline:11:30am, Jan 31
 Actual Time:
 Actual Delivery:
 Commit ID:
 Comments:
 
 5.
-Task: Work on getSourceCode: non-array type methods, and testing
-Estimated Time: 1.5h
-Target Deadline: 1pm, Jan 30
-Actual Time:
-Actual Delivery:
-Commit ID:
-Comments:
-
-6.
-Task: Work on getSourceCode: consider 1-d array fields, and testing
-Estimated Time: 2h
-Target Deadline: 5pm, Jan 30
-Actual Time:
-Actual Delivery:
-Commit ID:
-Comments:
-
-7.
-Task: Work on getSourceCode: consider 1-d array's four methods, and testing
-Estimated Time: 2h
-Target Deadline: 9pm, Jan 30
-Actual Time:
-Actual Delivery:
-Commit ID:
-Comments:
-
-8.
-Task: Work on getSourceCode: constructor of 1-d array, and testing
-Estimated Time: 1h
-Target Deadline: 11am, Jan 31
-Actual Time:
-Actual Delivery:
-Commit ID:
-Comments:
-
-9.
-Task: add support for multi-dimensional array, and testing
-Estimated Time: 3h
+Task: Work on getSourceCode: only non-array fields, and testing
+Estimated Time: 2.5h
 Target Deadline: 5pm, Jan 31
 Actual Time:
 Actual Delivery:
 Commit ID:
 Comments:
 
-10.
-Task: serialize primitive and String Type, and testing
+6.
+Task: Work on getSourceCode: non-array type methods, and testing
 Estimated Time: 2.5h
-Target Deadline: 11pm, Jan 31
+Target Deadline: 11:30am, Feb 1
 Actual Time:
 Actual Delivery:
 Commit ID:
 Comments:
 
-11.
-Task: serialize first occurrence of object type, and testing
+7.
+Task: Work on getSourceCode: consider 1-d array fields, and testing
+Estimated Time: 2.5h
+Target Deadline: 3:30pm, Feb 1
+Actual Time:
+Actual Delivery:
+Commit ID:
+Comments:
+
+8.
+Task: Work on getSourceCode: consider 1-d array's four methods, and testing
+Estimated Time: 2.5h
+Target Deadline: 9pm, Feb 1
+Actual Time:
+Actual Delivery:
+Commit ID:
+Comments:
+
+9.
+Task: Work on getSourceCode: constructor of 1-d array, and testing
 Estimated Time: 2h
-Target Deadline: 1:30pm, Feb 1
+Target Deadline: 11:30am, Feb 2
 Actual Time:
 Actual Delivery:
 Commit ID:
 Comments:
 
-12.
-Task: serialize reference of object type, and testing
-Estimated Time: 2h
-Target Deadline: 5pm, Feb 1
-Actual Time:
-Actual Delivery:
-Commit ID:
-Comments:
-
-13.
-Task: serialize array, and testing
-Estimated Time: 2h
-Target Deadline: 11pm, Feb 1
-Actual Time:
-Actual Delivery:
-Commit ID:
-Comments:
-
-14.
-Task: deserialize, and testing
+10.
+Task: add support for multi-dimensional array, and testing
 Estimated Time: 3h
 Target Deadline: 3pm, Feb 2
 Actual Time:
@@ -124,28 +95,73 @@ Actual Delivery:
 Commit ID:
 Comments:
 
+11.
+Task: serialize primitive and String Type, and testing
+Estimated Time: 2.5h
+Target Deadline: 8pm, Feb 2
+Actual Time:
+Actual Delivery:
+Commit ID:
+Comments:
+
+12.
+Task: serialize first occurrence of object type, and testing
+Estimated Time: 2h
+Target Deadline: 11:30am, Feb 3
+Actual Time:
+Actual Delivery:
+Commit ID:
+Comments:
+
+13.
+Task: serialize reference of object type, and testing
+Estimated Time: 2h
+Target Deadline: 3pm, Feb 3
+Actual Time:
+Actual Delivery:
+Commit ID:
+Comments:
+
+14.
+Task: serialize array, and testing
+Estimated Time: 2h
+Target Deadline: 8pm, Feb 3
+Actual Time:
+Actual Delivery:
+Commit ID:
+Comments:
+
 15.
-Task: handle cycle in reference graph, and testing
+Task: deserialize, and testing
 Estimated Time: 3h
-Target Deadline: 11pm, Feb 3
+Target Deadline: 11：30am, Feb 4
 Actual Time:
 Actual Delivery:
 Commit ID:
 Comments:
 
 16.
-Task: final testing
+Task: handle cycle in reference graph, and testing
 Estimated Time: 3h
-Target Deadline: 11pm, Feb 4
+Target Deadline: 8pm, Feb 4
 Actual Time:
 Actual Delivery:
 Commit ID:
 Comments:
 
 17.
+Task: final testing
+Estimated Time: 3h
+Target Deadline: 11：30am, Feb 5
+Actual Time:
+Actual Delivery:
+Commit ID:
+Comments:
+
+18.
 Task: write reflections
 Estimated Time: 1.5h
-Target Deadline: 1pm, Feb 5
+Target Deadline: 8pm, Feb 5
 Actual Time:
 Actual Delivery:
 Commit ID:
