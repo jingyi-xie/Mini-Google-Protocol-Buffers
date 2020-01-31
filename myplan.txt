@@ -4,7 +4,7 @@ Estimated Time: 0.5h
 Target Deadline: 3:30pm, Jan 29
 Actual Time: 1h
 Actual Delivery: 5:57pm, Jan 29
-Commit ID: 5d95eafd
+Commit ID: 3a780f9c
 Comments: Get delayed by 568 bug. In the future I should better balance between differnet courses.
 
 
@@ -14,7 +14,7 @@ Estimated Time: 2h
 Target Deadline: 5pm, Jan 30
 Actual Time: 1.5h
 Actual Delivery: 12:03pm, Jan 30
-Commit ID: 
+Commit ID: 860861da
 Comments: The old task was to “implement and test an end-to-end solution that supports getClassNames,
 getSourceCode and createAllClasses (one class with one field)”. This took longer than expected because
 I needed to figure out how to store the read data and I had some problems when trying to print out the
