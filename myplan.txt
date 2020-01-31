@@ -25,12 +25,10 @@ Task: implement and test an end-to-end solution that supports getClassNames, get
 createAllClasses (one class with one field)
 Estimated Time: 2h
 Target Deadline: 11:30pm, Jan 30
-Actual Time:
-Actual Delivery:
-Commit ID:
-Comments: This took longer than expected because I needed to figure out how to store the read data and
-I had some problems when trying to print out the data. This task is actually too large to finish in
-the previous deadline, so I changed it.
+Actual Time: 2.5h
+Actual Delivery: 12:42am, Jan 31
+Commit ID: 4833aabf
+Comments: Took longer than expected. Spent some time looking for how to use printwriter.
 
 4.
 Task: Work on getClassNames method for multiple classes, and testing

@@ -47,12 +47,18 @@ public class ClassBuilder {
         + " = x; }}";
   }
 
-  public void createAllClasses(String basePath) throws FileNotFoundException {
+  public void createAllClasses(String basePath) {
     String path = basePath + className + ".java";
-    File file = new File(path);
-    PrintWriter out = new PrintWriter(file);
-    out.println(getSourceCode());
-    out.close();
+    try {
+      File file = new File(path);
+      file.createNewFile();
+      PrintWriter out = new PrintWriter(file);
+      out.println(getSourceCode());
+      out.close();
+    } catch (IOException e) {
+      System.out.println("An error occurred.");
+    }  
+    
   }
     
 /*

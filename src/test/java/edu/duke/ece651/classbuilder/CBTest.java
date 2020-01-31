@@ -18,7 +18,7 @@ public class CBTest {
    System.out.println(c.name);
    System.out.println(c.type);
    System.out.println(c.getSourceCode());
-   c.createAllClasses("/home/jaryn/jx95-json-651");
+   c.createAllClasses("/home/jaryn/jx95-json-651/json/");
     //assertEquals(c.className, "Test");
     //assertEquals(c.name, "x");
     //assertEquals(c.type, "int");
