@@ -1,46 +1,44 @@
 package edu.duke.ece651.classbuilder;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-//import java.util.Iterator; 
-//import java.util.Map;
 import java.io.InputStream;
-import org.json.*;
 import java.io.PrintWriter;
+import java.util.*;
+
+import org.json.*;
 
 public class ClassBuilder {
-  // private String className;
-  // private Map<String, String> fields;
-  public String className;
-  public String name;
-  public String type;
-  // public Map<String, String> fields;
+  private Map<String, Map<String, String>> classMap;
+  private String packageName;
 
   private void construct_helper(JSONObject jo) {
-    JSONArray classes = jo.getJSONArray("classes");
-    JSONObject oneclass = classes.getJSONObject(0);
-    // Iterator it = classes.iterator();
-
-    className = oneclass.getString("name");
-    JSONArray ja = oneclass.getJSONArray("fields");
-    JSONObject onefield = ja.getJSONObject(0);
-    name = onefield.getString("name");
-    type = onefield.getString("type");
-    // fields.put(onefield.getString("name"), onefield.getString("type"));
+    //packageName = jo.getString("package");
+    JSONArray classJArr = jo.getJSONArray("classes");
+    for (int i = 0; i < classJArr.length(); i++) {
+        JSONObject curJO =  classJArr.getJSONObject(i);
+        SingleClassBuilder curClass = new SingleClassBuilder(curJO);
+        this.classMap.put(curClass.getClassName(), curClass.getFieldMap());
+    }
   }
 
   public ClassBuilder(String str) {
+    this.classMap = new LinkedHashMap<>();
     JSONObject jo = new JSONObject(str);
     construct_helper(jo);
   }
 
   public ClassBuilder(InputStream input) {
+    this.classMap = new LinkedHashMap<>();
     JSONObject jo = new JSONObject(input);
     construct_helper(jo);
   }
 
-  public String getSourceCode(/* String className */) {
+  public Collection<String> getClassNames() {
+    return new ArrayList<>(this.classMap.keySet());
+  }
+  /* 
+  public String getSourceCode(String className) {
     String capName = name.substring(0, 1).toUpperCase() + name.substring(1);
     return "public class " + className + "{\n private " + type + " " + name + ";\n public int get" + capName
         + "() {\n return " + name + ";\n }\n  public void set" + capName + "(" + type + " x) { \n this." + name
@@ -59,7 +57,7 @@ public class ClassBuilder {
       System.out.println("An error occurred.");
     }  
     
-  }
+  } */
     
 /*
 class Main {

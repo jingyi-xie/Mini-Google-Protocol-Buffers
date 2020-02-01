@@ -34,10 +34,10 @@ Comments: Took longer than expected. Spent some time looking for how to use prin
 Task: Work on getClassNames method for multiple classes, and testing
 Estimated Time: 2.5h
 Target Deadline:11:30am, Jan 31
-Actual Time:
-Actual Delivery:
+Actual Time: 2h13min
+Actual Delivery: 9:43pm, Jan 31
 Commit ID:
-Comments:
+Comments: I had a headache today so the task got delayed. Now I feel better and am trying to keep up with the schedule. I have writtern the overall data structure and tested getting the names of multiple class names.
 
 5.
 Task: Work on getSourceCode: only non-array fields, and testing

@@ -9,26 +9,9 @@ import java.io.*;
 public class CBTest {
   @Test
   public void test_classbuilder() {
-    String r = "{\"classes\" : [{\"name\" : \"Test\", \"fields\" : [{\"name\" : \"x\", \"type\" : \"int\"}]}]}";
-                                         
-    //String path = "/home/jaryn/jx95-json-651/json/simple.json";
-    //InputStream inputStream = new FileInputStream(new File(path));   
-   ClassBuilder c = new ClassBuilder(r);
-   System.out.println(c.className);
-   System.out.println(c.name);
-   System.out.println(c.type);
-   System.out.println(c.getSourceCode());
-   c.createAllClasses("/home/jaryn/jx95-json-651/json/");
-    //assertEquals(c.className, "Test");
-    //assertEquals(c.name, "x");
-    //assertEquals(c.type, "int");
-    
-    
-    //ClassBuilder cb = new ClassBuilder(str);
-  
-    
-    
-  
-  
+    String r = "{ 'classes' :[{'name' : 'Course', 'fields' : [ {'name' : 'instructor', 'type' : 'Faculty'},{'name' : 'numStudents', 'type' : 'int' },{'name' : 'grades', 'type' :'Grade'}]},{'name' : 'Office',  'fields' : [ {'name' : 'occupant', 'type': 'Faculty'},{'name' : 'number', 'type': 'int'},{'name' : 'building' , 'type': 'String'}]},{'name' : 'Faculty', 'fields' : [ {'name' : 'name', 'type' : 'String' },{'name' : 'taught', 'type' : Course'}]},{'name' : 'Grade', 'fields' : [ {'name' : 'course', 'type' : 'Course'},{'name' : 'student', 'type' : 'String'},{'name' : 'grade', 'type': 'double'}]}]}";
+    //InputStream r = getClass().getResourceAsStream("/name-reference.json");
+    ClassBuilder cb = new ClassBuilder(r);
+    System.out.println(cb.getClassNames());
   }
 }
