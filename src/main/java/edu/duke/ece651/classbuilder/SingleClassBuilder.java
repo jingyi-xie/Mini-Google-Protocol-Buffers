@@ -10,7 +10,7 @@ private String className;
   public SingleClassBuilder(JSONObject jo) {
     this.fieldMap  = new LinkedHashMap<String, String>();
     className = jo.getString("name");
-    JSONArray fieldJArr = jo.getJSONArray("fields");
+    JSONArray fieldJArr = jo.optJSONArray("fields");
     for (int i = 0; i < fieldJArr.length(); i++) {
         JSONObject curJO =  fieldJArr.getJSONObject(i);
         this.fieldMap.put(curJO.getString("name"), curJO.getString("type"));

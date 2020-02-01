@@ -13,8 +13,8 @@ public class ClassBuilder {
   private String packageName;
 
   private void construct_helper(JSONObject jo) {
-    //packageName = jo.getString("package");
-    JSONArray classJArr = jo.getJSONArray("classes");
+    packageName = jo.optString("package");
+    JSONArray classJArr = jo.optJSONArray("classes");
     for (int i = 0; i < classJArr.length(); i++) {
         JSONObject curJO =  classJArr.getJSONObject(i);
         SingleClassBuilder curClass = new SingleClassBuilder(curJO);
