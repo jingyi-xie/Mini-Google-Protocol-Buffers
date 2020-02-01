@@ -49,10 +49,11 @@ structure and tested getting the names of multiple class names.
 Task: Work on getSourceCode: only non-array fields, and testing
 Estimated Time: 2.5h
 Target Deadline: 5pm, Jan 31
-Actual Time:
-Actual Delivery:
-Commit ID:
-Comments:
+Actual Time: 2h7min
+Actual Delivery: 00:19am, Feb 1
+Commit ID: de70a86fcc32a95bea5033c77dc8c4e2387b2a06
+Comments: Finally finished today's task. A little behind schedule, hope
+tomorrow will go well.
 
 6.
 Task: Work on getSourceCode: non-array type methods, and testing
