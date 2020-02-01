@@ -59,10 +59,11 @@ tomorrow will go well.
 Task: Work on getSourceCode: non-array type methods, and testing
 Estimated Time: 2.5h
 Target Deadline: 11:30am, Feb 1
-Actual Time:
-Actual Delivery:
-Commit ID:
-Comments:
+Actual Time: 35min
+Actual Delivery: 11:07am, Feb 1
+Commit ID: 3b8777f2b853262300f6e6bb09c873bb76f75f6b
+Comments: Took less time than expected. Use the spare time to deal with some
+corner cases.
 
 7.
 Task: Work on getSourceCode: consider 1-d array fields, and testing
