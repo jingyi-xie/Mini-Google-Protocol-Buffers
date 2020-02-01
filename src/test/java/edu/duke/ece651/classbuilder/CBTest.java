@@ -13,5 +13,6 @@ public class CBTest {
     //InputStream r = getClass().getResourceAsStream("/name-reference.json");
     ClassBuilder cb = new ClassBuilder(r);
     System.out.println(cb.getClassNames());
+    System.out.println(cb.getSourceCode("Course"));
   }
 }

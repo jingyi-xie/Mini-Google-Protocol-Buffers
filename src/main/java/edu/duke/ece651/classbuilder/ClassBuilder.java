@@ -9,7 +9,7 @@ import java.util.*;
 import org.json.*;
 
 public class ClassBuilder {
-  private Map<String, Map<String, String>> classMap;
+  private LinkedHashMap<String, Map<String, String>> classMap;
   private String packageName;
 
   private void construct_helper(JSONObject jo) {
@@ -37,14 +37,14 @@ public class ClassBuilder {
   public Collection<String> getClassNames() {
     return new ArrayList<>(this.classMap.keySet());
   }
-  /* 
   public String getSourceCode(String className) {
-    String capName = name.substring(0, 1).toUpperCase() + name.substring(1);
-    return "public class " + className + "{\n private " + type + " " + name + ";\n public int get" + capName
-        + "() {\n return " + name + ";\n }\n  public void set" + capName + "(" + type + " x) { \n this." + name
-        + " = x; }}";
+    if (!classMap.keySet().contains(className)) {
+        throw new NoSuchElementException("Failed to find class name!\n");
+    }
+    CodeBuilder codeB = new CodeBuilder(className, (LinkedHashMap)classMap.get(className)); 
+    return codeB.getCode(); 
   }
-
+  /*
   public void createAllClasses(String basePath) {
     String path = basePath + className + ".java";
     try {
