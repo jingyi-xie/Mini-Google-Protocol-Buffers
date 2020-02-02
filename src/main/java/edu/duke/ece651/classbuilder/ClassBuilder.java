@@ -9,7 +9,7 @@ import java.util.*;
 import org.json.*;
 
 public class ClassBuilder {
-  private LinkedHashMap<String, Map<String, String>> classMap;
+  private Map<String, ArrayList<SingleFieldBuilder>> classMap;
   private String packageName;
 
   private void construct_helper(JSONObject jo) {
@@ -18,31 +18,31 @@ public class ClassBuilder {
     for (int i = 0; i < classJArr.length(); i++) {
         JSONObject curJO =  classJArr.getJSONObject(i);
         SingleClassBuilder curClass = new SingleClassBuilder(curJO);
-        this.classMap.put(curClass.getClassName(), curClass.getFieldMap());
+        this.classMap.put(curClass.getClassName(), curClass.getFieldList());
     }
   }
 
   public ClassBuilder(String str) {
-    this.classMap = new LinkedHashMap<>();
+    this.classMap = new HashMap<>();
     JSONObject jo = new JSONObject(str);
     construct_helper(jo);
   }
 
   public ClassBuilder(InputStream input) {
-    this.classMap = new LinkedHashMap<>();
-    JSONTokener tokener = new JSONTokener(input);
-    JSONObject jo = new JSONObject(tokener);
+    this.classMap = new HashMap<>();
+    JSONObject jo = new JSONObject(input);
     construct_helper(jo);
   }
 
   public Collection<String> getClassNames() {
     return new ArrayList<>(this.classMap.keySet());
   }
+  
   public String getSourceCode(String className) {
     if (!classMap.keySet().contains(className)) {
         throw new NoSuchElementException("Failed to find class name!\n");
     }
-    CodeBuilder codeB = new CodeBuilder(className, (LinkedHashMap)classMap.get(className)); 
+    CodeBuilder codeB = new CodeBuilder(className, classMap.get(className));
     return codeB.getCode(); 
   }
   /*
