@@ -47,9 +47,13 @@ public class CodeBuilder {
   private void generateCode() {
     this.codeStart();
     for (SingleFieldBuilder cur : fieldList) {
-      if (!isArrayType(cur.getDimension())) {
-        nonArrayCode(cur.getFieldName(), cur.getFieldType());
-      }
+        if (!isArrayType(cur.getDimension())) {
+            System.out.println(cur.getFieldName() + "is dimension 0\n");
+            nonArrayCode(cur.getFieldName(), cur.getFieldType());
+          }
+          else {
+            System.out.println(cur.getFieldName() + "is dimension" + cur.getDimension() + "\n");
+          }
     }
     this.codeEnd();
   }

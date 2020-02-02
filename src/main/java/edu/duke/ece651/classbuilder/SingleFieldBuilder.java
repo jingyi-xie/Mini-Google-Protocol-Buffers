@@ -6,11 +6,25 @@ public class SingleFieldBuilder {
   private String fieldType;
   private int dimension;
 
+  private void calDimension(JSONObject obj) {
+    while(obj.optJSONObject("e") != null) {
+      dimension++;
+      obj = obj.optJSONObject("e");
+    }
+    dimension++;
+  }
   public SingleFieldBuilder(JSONObject jo) {
     this.fieldName = jo.getString("name");
-    this.fieldType = jo.getString("type");
-    this.dimension = 0;
+    if (jo.optJSONObject("type") == null) {
+      this.fieldType = jo.getString("type");
+      this.dimension = 0;
+    }
+    else {
+      JSONObject typeObj = jo.getJSONObject("type");
+      this.calDimension(typeObj);
+    }
   }
+
   public String getFieldName() {
     return fieldName;
   }

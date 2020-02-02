@@ -30,7 +30,8 @@ public class ClassBuilder {
 
   public ClassBuilder(InputStream input) {
     this.classMap = new HashMap<>();
-    JSONObject jo = new JSONObject(input);
+    JSONTokener tokener = new JSONTokener(input);
+    JSONObject jo = new JSONObject(tokener);
     construct_helper(jo);
   }
 
