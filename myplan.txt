@@ -69,24 +69,28 @@ corner cases.
 Task: Work on getSourceCode: consider 1-d array fields, and testing
 Estimated Time: 2.5h
 Target Deadline: 3:30pm, Feb 1
-Actual Time:
-Actual Delivery:
-Commit ID:
-Comments:
+Actual Time: 3h46min
+Actual Delivery: 9:40pm, Feb 1
+Commit ID: 89d5f5af24a3a10ac6448c94b7878a1cc356360d
+Comments: Got delayed by project of 568, need to adjust the deadline of later
+tasks because I need to work on 568 project in the afternoon. This took
+longer than expected. I underestimated the amount of work. In order to
+support array type field, I need to rewrite my overall data structure and
+do a lot of testing.
 
 8.
 Task: Work on getSourceCode: consider 1-d array's four methods, and testing
 Estimated Time: 2.5h
 Target Deadline: 9pm, Feb 1
-Actual Time:
-Actual Delivery:
-Commit ID:
-Comments:
+Actual Time: 25min
+Actual Delivery: 10:29pm, Feb 1
+Commit ID: 8b86bb757912ed61aa90562fc1c632b9dddfb74e
+Comments: After finishing the previous task, adding the four methods is easy.
 
 9.
 Task: Work on getSourceCode: constructor of 1-d array, and testing
 Estimated Time: 2h
-Target Deadline: 11:30am, Feb 2
+Target Deadline: 2pm, Feb 2
 Actual Time:
 Actual Delivery:
 Commit ID:
@@ -95,7 +99,7 @@ Comments:
 10.
 Task: add support for multi-dimensional array, and testing
 Estimated Time: 3h
-Target Deadline: 3pm, Feb 2
+Target Deadline: 10:00pm, Feb 2
 Actual Time:
 Actual Delivery:
 Commit ID:
@@ -104,7 +108,7 @@ Comments:
 11.
 Task: serialize primitive and String Type, and testing
 Estimated Time: 2.5h
-Target Deadline: 8pm, Feb 2
+Target Deadline: 11:30pm, Feb 2
 Actual Time:
 Actual Delivery:
 Commit ID:
@@ -113,7 +117,7 @@ Comments:
 12.
 Task: serialize first occurrence of object type, and testing
 Estimated Time: 2h
-Target Deadline: 11:30am, Feb 3
+Target Deadline: 2pm, Feb 3
 Actual Time:
 Actual Delivery:
 Commit ID:
@@ -122,7 +126,7 @@ Comments:
 13.
 Task: serialize reference of object type, and testing
 Estimated Time: 2h
-Target Deadline: 3pm, Feb 3
+Target Deadline: 10pm, Feb 3
 Actual Time:
 Actual Delivery:
 Commit ID:
@@ -131,7 +135,7 @@ Comments:
 14.
 Task: serialize array, and testing
 Estimated Time: 2h
-Target Deadline: 8pm, Feb 3
+Target Deadline: 11:45pm, Feb 3
 Actual Time:
 Actual Delivery:
 Commit ID:
@@ -140,7 +144,7 @@ Comments:
 15.
 Task: deserialize, and testing
 Estimated Time: 3h
-Target Deadline: 11：30am, Feb 4
+Target Deadline: 2pm, Feb 4
 Actual Time:
 Actual Delivery:
 Commit ID:
@@ -149,25 +153,34 @@ Comments:
 16.
 Task: handle cycle in reference graph, and testing
 Estimated Time: 3h
-Target Deadline: 8pm, Feb 4
+Target Deadline: 10pm, Feb 4
 Actual Time:
 Actual Delivery:
 Commit ID:
 Comments:
 
 17.
-Task: final testing
+Task: handle corner cases and exception
 Estimated Time: 3h
-Target Deadline: 11：30am, Feb 5
+Target Deadline: 2pm, Feb 5
 Actual Time:
 Actual Delivery:
 Commit ID:
 Comments:
 
 18.
+Task: final testing
+Estimated Time: 3h
+Target Deadline: 8：45pm, Feb 5
+Actual Time:
+Actual Delivery:
+Commit ID:
+Comments:
+
+19.
 Task: write reflections
 Estimated Time: 1.5h
-Target Deadline: 8pm, Feb 5
+Target Deadline: 11:30pm, Feb 5
 Actual Time:
 Actual Delivery:
 Commit ID:

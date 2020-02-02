@@ -6,43 +6,43 @@ import java.util.Map;
 
 public class CodeBuilder {
   private String className;
+  private String packageName;
   private ArrayList<SingleFieldBuilder> fieldList;
-  private String resCode;
+  private String constructer;
+  private String fieldCode;
+  private String methodCode;
+  private boolean hasNoField;
 
-  public CodeBuilder(String name, ArrayList<SingleFieldBuilder> list) {
+  public CodeBuilder(String name, ArrayList<SingleFieldBuilder> list, String pkgName) {
     this.className = name;
+    this.packageName = pkgName;
     this.fieldList = list;
-    this.resCode = "";
+    this.hasNoField = (list.size() == 0);
+    this.constructer = "";
+    this.fieldCode = "";
+    this.methodCode = "";
   }
-
-  private boolean isArrayType(int dimension) {
-    return dimension != 0;
+  //Code for package and import
+  private String getPkgNImport()  {
+    String res = "";
+    if (!packageName.equals("")) {
+      res += "package " + packageName + ";" + "\n";
+    }
+    res += "import java.util.*" + ";" + "\n";
+    res += "import org.json.*" + ";" + "\n";
+    return res;
   }
-
   //Generate the start of source code
-  private void codeStart() {
-    resCode += "public class " + className + " {" + "\n";
+  private String getCodeStart() {
+    return "public class " + className + " {" + "\n";
   }
   //Generate the end of source code
-  private void codeEnd() {
-    resCode += "}";
+  private String getcodeEnd() {
+    return "}" + "\n";
   }
   //Get the capitalized field name
   private String capName(String name) {
-      return name.substring(0, 1).toUpperCase() + name.substring(1);
-  }
-  //Generate the code of non-array type: field + method
-  private void nonArrayCode(String name, String type) {
-    resCode += "private " + type + " " + name + ";" + "\n";
-    String capFieldName = capName(name);
-    //Get method
-    resCode += "public " + type + " get" + capFieldName + "() {" + "\n";
-    resCode += "return " + name + ";" + "\n";
-    resCode += "}" + "\n";  
-    //Set method
-    resCode += "public void set" + capFieldName + "(" + type + " x) {" + "\n";
-    resCode += "this." + name + " = x;" + "\n";
-    resCode += "}" + "\n";
+    return name.substring(0, 1).toUpperCase() + name.substring(1);
   }
   //Get the wrapper of type
   private String getWrapper(String type) {
@@ -72,43 +72,72 @@ public class CodeBuilder {
     }
     return type;
   }
+  //
+  private void addToConstruct(SingleFieldBuilder curField) {
+    //int curDim = curField.getDimension();  
+    String temp = getWrapper(curField.getFieldType());
+    temp = "ArrayList<" + temp + "> " + curField.getFieldName() + " = new ArrayList<>()" + ";" + "\n";
+    this.constructer += temp;
+  }
+  private String getConstructor() {
+    String constructStart = "public " + className + "()" + " {" + "\n";  
+    String constructEnd = "}" + "\n";
+    return constructStart + this.constructer + constructEnd;
+  }
+  //Generate the code of non-array type: field + method
+  private void nonArrayCode(String name, String type) {
+    fieldCode += "private " + type + " " + name + ";" + "\n";
+    String capFieldName = capName(name);
+    //Get method
+    methodCode += "public " + type + " get" + capFieldName + "() {" + "\n";
+    methodCode += "return " + name + ";" + "\n";
+    methodCode += "}" + "\n";  
+    //Set method
+    methodCode += "public void set" + capFieldName + "(" + type + " x) {" + "\n";
+    methodCode += "this." + name + " = x;" + "\n";
+  }
+  
   //Generate the code of array type field
   private void arrayCode(String name, String type, int dim) {
-    resCode += "private " +  "ArrayList<" + getWrapper(type) + "> " + name + ";" + "\n";
+    fieldCode += "private " +  "ArrayList<" + getWrapper(type) + "> " + name + ";" + "\n";
     String capFieldName = capName(name);
     //num method
-    resCode += "public int " + "num" + capFieldName + "() {" + "\n";
-    resCode += "return " + name + ".size();" + "\n";
-    resCode += "}" + "\n";
+    methodCode += "public int " + "num" + capFieldName + "() {" + "\n";
+    methodCode += "return " + name + ".size();" + "\n";
+    methodCode += "}" + "\n";
     //add method
-    resCode += "public void add" + capFieldName + "(" + type + " x) {" + "\n";
-    resCode += name + ".add(x);" + "\n";
-    resCode += "}" + "\n"; 
+    methodCode += "public void add" + capFieldName + "(" + type + " x) {" + "\n";
+    methodCode += name + ".add(x);" + "\n";
+    methodCode += "}" + "\n"; 
     //Get method
-    resCode += "public " + type + " get" + capFieldName + "(int index) {" + "\n";
-    resCode += "return " + name + ".get(index);" + "\n";
-    resCode += "}" + "\n";  
+    methodCode += "public " + type + " get" + capFieldName + "(int index) {" + "\n";
+    methodCode += "return " + name + ".get(index);" + "\n";
+    methodCode += "}" + "\n";  
     //Set method
-    resCode += "public void set" + capFieldName + "(int index, " + type + " x) {" + "\n";
-    resCode += name + ".set(index, x);" + "\n";
-    resCode += "}" + "\n";
+    methodCode += "public void set" + capFieldName + "(int index, " + type + " x) {" + "\n";
+    methodCode += name + ".set(index, x);" + "\n";
+    methodCode += "}" + "\n";
   }
   private void generateCode() {
-    this.codeStart();
+    //this.codeStart();
+    //this.pkgNImport();
     for (SingleFieldBuilder cur : fieldList) {
-      if (!isArrayType(cur.getDimension())) {
+      if (cur.getDimension() == 0) {
         //System.out.println(cur.getFieldName() + "is dimension 0\n");
         this.nonArrayCode(cur.getFieldName(), cur.getFieldType());
       }
       else {
         //System.out.println(cur.getFieldName() + "is dimension" + cur.getDimension() + "\n");
         this.arrayCode(cur.getFieldName(), cur.getFieldType(), 1/*cur.getDimension()*/);
+        this.addToConstruct(cur);
       }
     }
-    this.codeEnd();
   }
   public String getCode() {
+    if (hasNoField) {
+      return this.getPkgNImport() + this.getCodeStart() + this.getcodeEnd();
+    }
     this.generateCode();
-    return resCode;
+    return this.getPkgNImport() + this.getCodeStart() +  this.fieldCode + this.getConstructor() +  this.methodCode + this.getcodeEnd();
   }
 }

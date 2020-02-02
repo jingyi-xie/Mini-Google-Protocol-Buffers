@@ -43,7 +43,7 @@ public class ClassBuilder {
     if (!classMap.keySet().contains(className)) {
         throw new NoSuchElementException("Failed to find class name!\n");
     }
-    CodeBuilder codeB = new CodeBuilder(className, classMap.get(className));
+    CodeBuilder codeB = new CodeBuilder(className, classMap.get(className), packageName);
     return codeB.getCode(); 
   }
   /*
