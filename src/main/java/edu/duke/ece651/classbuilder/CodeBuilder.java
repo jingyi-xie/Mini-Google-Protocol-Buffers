@@ -75,6 +75,23 @@ public class CodeBuilder {
   //Generate the code of array type field
   private void arrayCode(String name, String type, int dim) {
     resCode += "private " +  "ArrayList<" + getWrapper(type) + "> " + name + ";" + "\n";
+    String capFieldName = capName(name);
+    //num method
+    resCode += "public int " + "num" + capFieldName + "() {" + "\n";
+    resCode += "return " + name + ".size();" + "\n";
+    resCode += "}" + "\n";
+    //add method
+    resCode += "public void add" + capFieldName + "(" + type + " x) {" + "\n";
+    resCode += name + ".add(x);" + "\n";
+    resCode += "}" + "\n"; 
+    //Get method
+    resCode += "public " + type + " get" + capFieldName + "(int index) {" + "\n";
+    resCode += "return " + name + ".get(index);" + "\n";
+    resCode += "}" + "\n";  
+    //Set method
+    resCode += "public void set" + capFieldName + "(int index, " + type + " x) {" + "\n";
+    resCode += name + ".set(index, x);" + "\n";
+    resCode += "}" + "\n";
   }
   private void generateCode() {
     this.codeStart();
