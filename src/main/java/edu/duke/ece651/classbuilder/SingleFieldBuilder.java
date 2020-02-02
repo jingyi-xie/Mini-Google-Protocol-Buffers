@@ -11,6 +11,7 @@ public class SingleFieldBuilder {
       dimension++;
       obj = obj.optJSONObject("e");
     }
+    this.fieldType = obj.getString("e");
     dimension++;
   }
   public SingleFieldBuilder(JSONObject jo) {

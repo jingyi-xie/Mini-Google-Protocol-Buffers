@@ -44,16 +44,49 @@ public class CodeBuilder {
     resCode += "this." + name + " = x;" + "\n";
     resCode += "}" + "\n";
   }
+  //Get the wrapper of type
+  private String getWrapper(String type) {
+    if (type.equals("boolean")) {
+      return "Boolean";
+    }
+    if (type.equals("byte")) {
+      return "Byte";
+    }
+    if (type.equals("char")) {
+      return "Character";
+    }
+    if (type.equals("short")) {
+      return "Short";
+    }
+    if (type.equals("int")) {
+      return "Integer";
+    }
+    if (type.equals("long")) {
+      return "Long";
+    }
+    if (type.equals("float")) {
+      return "Float";
+    }
+    if (type.equals("double")) {
+      return "Double";
+    }
+    return type;
+  }
+  //Generate the code of array type field
+  private void arrayCode(String name, String type, int dim) {
+    resCode += "private " +  "ArrayList<" + getWrapper(type) + "> " + name + ";" + "\n";
+  }
   private void generateCode() {
     this.codeStart();
     for (SingleFieldBuilder cur : fieldList) {
-        if (!isArrayType(cur.getDimension())) {
-            System.out.println(cur.getFieldName() + "is dimension 0\n");
-            nonArrayCode(cur.getFieldName(), cur.getFieldType());
-          }
-          else {
-            System.out.println(cur.getFieldName() + "is dimension" + cur.getDimension() + "\n");
-          }
+      if (!isArrayType(cur.getDimension())) {
+        //System.out.println(cur.getFieldName() + "is dimension 0\n");
+        this.nonArrayCode(cur.getFieldName(), cur.getFieldType());
+      }
+      else {
+        //System.out.println(cur.getFieldName() + "is dimension" + cur.getDimension() + "\n");
+        this.arrayCode(cur.getFieldName(), cur.getFieldType(), 1/*cur.getDimension()*/);
+      }
     }
     this.codeEnd();
   }
