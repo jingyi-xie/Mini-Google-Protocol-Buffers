@@ -91,10 +91,12 @@ Comments: After finishing the previous task, adding the four methods is easy.
 Task: Work on getSourceCode: constructor of 1-d array, and testing
 Estimated Time: 2h
 Target Deadline: 2pm, Feb 2
-Actual Time:
-Actual Delivery:
-Commit ID:
-Comments:
+Actual Time: 2h16min
+Actual Delivery: 12:54pm, Feb 2
+Commit ID: 6bcde9eb251f4cd4c05067ada639dad933785775
+Comments: Make sone changes to the codebuilder class in order to add the
+constructor but keep a legal order of format. Should've thought about the
+constructor before writing the codebuilder class.
 
 10.
 Task: add support for multi-dimensional array, and testing

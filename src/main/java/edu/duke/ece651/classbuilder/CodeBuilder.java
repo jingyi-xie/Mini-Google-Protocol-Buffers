@@ -76,7 +76,7 @@ public class CodeBuilder {
   private void addToConstruct(SingleFieldBuilder curField) {
     //int curDim = curField.getDimension();  
     String temp = getWrapper(curField.getFieldType());
-    temp = "ArrayList<" + temp + "> " + curField.getFieldName() + " = new ArrayList<>()" + ";" + "\n";
+    temp = "this." + curField.getFieldName() + " = new ArrayList<>()" + ";" + "\n";
     this.constructer += temp;
   }
   private String getConstructor() {
@@ -96,25 +96,39 @@ public class CodeBuilder {
     methodCode += "public void set" + capFieldName + "(" + type + " x) {" + "\n";
     methodCode += "this." + name + " = x;" + "\n";
   }
-  
+  private String getNestCollect(String type, int dim) {
+    if (dim == 0) {
+      return type;
+    }
+    String res = type;
+    for (int i = 0; i < dim; i++) {
+      res = "Collection<" + res + ">";
+    }
+    return res;
+  }
+  private String getNestArrList(String input) {
+    return "ArrayList<" + input + ">";
+  }
   //Generate the code of array type field
   private void arrayCode(String name, String type, int dim) {
-    fieldCode += "private " +  "ArrayList<" + getWrapper(type) + "> " + name + ";" + "\n";
+    String nestCollection = getNestCollect(getWrapper(type), dim - 1);
+    String nestArrList = getNestArrList(nestCollection);
+    fieldCode += "private " +  nestArrList + " " + name + " ;" + "\n";
     String capFieldName = capName(name);
     //num method
     methodCode += "public int " + "num" + capFieldName + "() {" + "\n";
     methodCode += "return " + name + ".size();" + "\n";
     methodCode += "}" + "\n";
     //add method
-    methodCode += "public void add" + capFieldName + "(" + type + " x) {" + "\n";
+    methodCode += "public void add" + capFieldName + "(" + nestCollection + " x) {" + "\n";
     methodCode += name + ".add(x);" + "\n";
     methodCode += "}" + "\n"; 
     //Get method
-    methodCode += "public " + type + " get" + capFieldName + "(int index) {" + "\n";
+    methodCode += "public " + nestCollection + " get" + capFieldName + "(int index) {" + "\n";
     methodCode += "return " + name + ".get(index);" + "\n";
     methodCode += "}" + "\n";  
     //Set method
-    methodCode += "public void set" + capFieldName + "(int index, " + type + " x) {" + "\n";
+    methodCode += "public void set" + capFieldName + "(int index, " + nestCollection + " x) {" + "\n";
     methodCode += name + ".set(index, x);" + "\n";
     methodCode += "}" + "\n";
   }
@@ -126,9 +140,9 @@ public class CodeBuilder {
         //System.out.println(cur.getFieldName() + "is dimension 0\n");
         this.nonArrayCode(cur.getFieldName(), cur.getFieldType());
       }
-      else {
+      else if (cur.getDimension() >= 1) {
         //System.out.println(cur.getFieldName() + "is dimension" + cur.getDimension() + "\n");
-        this.arrayCode(cur.getFieldName(), cur.getFieldType(), 1/*cur.getDimension()*/);
+        this.arrayCode(cur.getFieldName(), cur.getFieldType(), cur.getDimension());
         this.addToConstruct(cur);
       }
     }
