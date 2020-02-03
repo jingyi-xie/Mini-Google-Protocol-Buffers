@@ -102,10 +102,10 @@ constructor before writing the codebuilder class.
 Task: add support for multi-dimensional array, and testing
 Estimated Time: 3h
 Target Deadline: 10:00pm, Feb 2
-Actual Time:
-Actual Delivery:
-Commit ID:
-Comments:
+Actual Time: 1h45min
+Actual Delivery: 08:18pm, Feb 2
+Commit ID: 6c5f9f26ed38a4c59d526689a86e4d8c0842cd3a
+Comments: The previous task make implementing this one very straightforward.
 
 11.
 Task: serialize primitive and String Type, and testing

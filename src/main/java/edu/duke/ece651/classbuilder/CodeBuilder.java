@@ -109,6 +109,22 @@ public class CodeBuilder {
   private String getNestArrList(String input) {
     return "ArrayList<" + input + ">";
   }
+  private String getSerializer() {
+    String resStr = "";
+    resStr += "public JSONObject toJSON() throws JSONException {" + "\n";
+    resStr += "JSONObject ans = new JSONObject();" + "\n";
+    resStr += "ans.put(\"id\", 1);" + "\n";
+    resStr += "ans.put(\"type\", " + className + ");" + "\n";
+    resStr += "JSONArray fieldValuePair = new JSONArray();" + "\n";
+    for (SingleFieldBuilder curField : fieldList) {
+      resStr += "JSONObject curPair = new JSONObject();" + "\n";
+      resStr += "curPair.put(" + curField.getFieldName() + ".toString(), " + curField.getFieldName() + ");" + "\n";
+      resStr += "fieldValuePair.add(curPair);" + "\n";
+    }    
+    resStr += "ans.put(\"values\", fieldValuePair);" + "\n"; 
+    resStr += "return ans;" + "\n";
+    return resStr;
+  }
   //Generate the code of array type field
   private void arrayCode(String name, String type, int dim) {
     String nestCollection = getNestCollect(getWrapper(type), dim - 1);
@@ -152,6 +168,6 @@ public class CodeBuilder {
       return this.getPkgNImport() + this.getCodeStart() + this.getcodeEnd();
     }
     this.generateCode();
-    return this.getPkgNImport() + this.getCodeStart() +  this.fieldCode + this.getConstructor() +  this.methodCode + this.getcodeEnd();
+    return this.getPkgNImport() + this.getCodeStart() +  this.fieldCode + this.getConstructor() +  this.methodCode + getSerializer() + this.getcodeEnd();
   }
 }
