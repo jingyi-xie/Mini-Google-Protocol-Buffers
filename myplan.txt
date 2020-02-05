@@ -121,19 +121,21 @@ serialization.
 Task: serialize first occurrence of object type, and testing
 Estimated Time: 2h
 Target Deadline: 11pm, Feb 4
-Actual Time:
-Actual Delivery:
-Commit ID:
-Comments:
+Actual Time: 6.5h (plus task 13)
+Actual Delivery: 10:33pm. Feb 4
+Commit ID: 22570b04e8a7b8381b9a7fae30cc4ed29ea96ee1
+Comments: Severely underestimated the workload. Spent quite some time to figure
+out how to handle object, especially reference.
 
 13.
 Task: serialize reference of object type, and testing
 Estimated Time: 2h
 Target Deadline: 11pm, Feb 4
-Actual Time:
-Actual Delivery:
-Commit ID:
-Comments:
+Actual Time: 6.5h (plus task 12)
+Actual Delivery: 10:33pm, Feb 4
+Commit ID: 22570b04e8a7b8381b9a7fae30cc4ed29ea96ee1
+Comments: Severely underestimated the workload. Spent quite some time to figure
+out how to handle object, especially reference.
 
 14.
 Task: serialize array, and testing

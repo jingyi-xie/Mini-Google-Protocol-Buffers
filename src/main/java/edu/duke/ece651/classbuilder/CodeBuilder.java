@@ -131,10 +131,26 @@ public class CodeBuilder {
     resStr += "map.put(this, uniqueid);" + "\n";
     resStr += "ans.put(\"type\", \"" + className + "\");" + "\n";
     resStr += "JSONArray fieldValuePairs = new JSONArray();" + "\n";
+    resStr += "JSONArray arrayField; // for array type field only" + "\n";
     resStr += "JSONObject curPair;" + "\n";
     for (SingleFieldBuilder curField : fieldList) {
       resStr += "curPair = new JSONObject();" + "\n";
-      if (primitiveOrStr(curField.getFieldType())) {
+      if (curField.getDimension() == 1) {
+        resStr += "arrayField = new JSONArray();" + "\n";
+        resStr += "JSONObject curEle;" + "\n";
+        resStr += "for (int i = 0; i < " + curField.getFieldName() + ".size(); i++) {" + "\n";
+        resStr += "curEle = new JSONObject();" + "\n";
+        if (primitiveOrStr(curField.getFieldType())) {
+          resStr += "curEle.put(\"" + curField.getFieldName() + "\", this." + curField.getFieldName() + ".get(i));" + "\n";      
+        }
+        else {
+          resStr += "curEle.put(\"" + curField.getFieldName() + "\", this." + curField.getFieldName() + ".get(i).toJSONHelper(map));" + "\n";      
+        }
+        resStr += "arrayField.add(curEle);" + "\n"; 
+        resStr += "}" + "\n";
+        resStr += "curPair.put(\"" + curField.getFieldName() + "\", arrayField);" + "\n";
+      }
+      else if (curField.getDimension() == 0 && primitiveOrStr(curField.getFieldType())) {
         resStr += "curPair.put(\"" + curField.getFieldName() + "\", this." + curField.getFieldName() + ");" + "\n";
       }
       else {
