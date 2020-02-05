@@ -111,15 +111,16 @@ Comments: The previous task make implementing this one very straightforward.
 Task: serialize primitive and String Type, and testing
 Estimated Time: 2.5h
 Target Deadline: 11:30pm, Feb 2
-Actual Time:
-Actual Delivery:
-Commit ID:
-Comments:
+Actual Time: 4h26min
+Actual Delivery: 01:43 am, Feb 3
+Commit ID: 47945ecac782dec358cda59a1bd3fc2819523726
+Comments: Took far longer than  expected. Spent quite some time to understand
+serialization. 
 
 12.
 Task: serialize first occurrence of object type, and testing
 Estimated Time: 2h
-Target Deadline: 2pm, Feb 3
+Target Deadline: 11pm, Feb 4
 Actual Time:
 Actual Delivery:
 Commit ID:
@@ -128,7 +129,7 @@ Comments:
 13.
 Task: serialize reference of object type, and testing
 Estimated Time: 2h
-Target Deadline: 10pm, Feb 3
+Target Deadline: 11pm, Feb 4
 Actual Time:
 Actual Delivery:
 Commit ID:
@@ -137,7 +138,7 @@ Comments:
 14.
 Task: serialize array, and testing
 Estimated Time: 2h
-Target Deadline: 11:45pm, Feb 3
+Target Deadline: 11:45am, Feb 5
 Actual Time:
 Actual Delivery:
 Commit ID:
@@ -146,7 +147,7 @@ Comments:
 15.
 Task: deserialize, and testing
 Estimated Time: 3h
-Target Deadline: 2pm, Feb 4
+Target Deadline: 11pm, Feb 5
 Actual Time:
 Actual Delivery:
 Commit ID:
@@ -155,7 +156,7 @@ Comments:
 16.
 Task: handle cycle in reference graph, and testing
 Estimated Time: 3h
-Target Deadline: 10pm, Feb 4
+Target Deadline: 11am, Feb 6
 Actual Time:
 Actual Delivery:
 Commit ID:
@@ -164,7 +165,7 @@ Comments:
 17.
 Task: handle corner cases and exception
 Estimated Time: 3h
-Target Deadline: 2pm, Feb 5
+Target Deadline: 3pm, Feb 6
 Actual Time:
 Actual Delivery:
 Commit ID:
@@ -173,7 +174,7 @@ Comments:
 18.
 Task: final testing
 Estimated Time: 3h
-Target Deadline: 8：45pm, Feb 5
+Target Deadline: 6：45pm, Feb 6
 Actual Time:
 Actual Delivery:
 Commit ID:
@@ -182,7 +183,7 @@ Comments:
 19.
 Task: write reflections
 Estimated Time: 1.5h
-Target Deadline: 11:30pm, Feb 5
+Target Deadline: 8:30pm, Feb 6
 Actual Time:
 Actual Delivery:
 Commit ID:

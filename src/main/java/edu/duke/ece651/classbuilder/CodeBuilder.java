@@ -12,12 +12,14 @@ public class CodeBuilder {
   private String fieldCode;
   private String methodCode;
   private boolean hasNoField;
+  private boolean hasNoArray;
 
   public CodeBuilder(String name, ArrayList<SingleFieldBuilder> list, String pkgName) {
     this.className = name;
     this.packageName = pkgName;
     this.fieldList = list;
     this.hasNoField = (list.size() == 0);
+    this.hasNoArray = true;
     this.constructer = "";
     this.fieldCode = "";
     this.methodCode = "";
@@ -29,6 +31,7 @@ public class CodeBuilder {
       res += "package " + packageName + ";" + "\n";
     }
     res += "import java.util.*" + ";" + "\n";
+    res += "import java.lang.*" + ";" + "\n";
     res += "import org.json.*" + ";" + "\n";
     return res;
   }
@@ -95,6 +98,7 @@ public class CodeBuilder {
     //Set method
     methodCode += "public void set" + capFieldName + "(" + type + " x) {" + "\n";
     methodCode += "this." + name + " = x;" + "\n";
+    methodCode += "}" + "\n";  
   }
   private String getNestCollect(String type, int dim) {
     if (dim == 0) {
@@ -109,20 +113,41 @@ public class CodeBuilder {
   private String getNestArrList(String input) {
     return "ArrayList<" + input + ">";
   }
+  private boolean primitiveOrStr(String type) {
+    return type.equals("boolean") || type.equals("byte") || type.equals("char") || type.equals("short") || 
+          type.equals("int") || type.equals("long") || type.equals("float") || type.equals("double") || 
+          type.equals("String");
+  }
   private String getSerializer() {
     String resStr = "";
-    resStr += "public JSONObject toJSON() throws JSONException {" + "\n";
+    resStr += "public JSONObject toJSONHelper(HashMap<Object, Integer> map) throws JSONException {" + "\n";
     resStr += "JSONObject ans = new JSONObject();" + "\n";
-    resStr += "ans.put(\"id\", 1);" + "\n";
-    resStr += "ans.put(\"type\", " + className + ");" + "\n";
-    resStr += "JSONArray fieldValuePair = new JSONArray();" + "\n";
-    for (SingleFieldBuilder curField : fieldList) {
-      resStr += "JSONObject curPair = new JSONObject();" + "\n";
-      resStr += "curPair.put(" + curField.getFieldName() + ".toString(), " + curField.getFieldName() + ");" + "\n";
-      resStr += "fieldValuePair.add(curPair);" + "\n";
-    }    
-    resStr += "ans.put(\"values\", fieldValuePair);" + "\n"; 
+    resStr += "if (map.containsKey(this)) {" + "\n";
+    resStr += "ans.put(\"ref\", map.get(this));" + "\n";
     resStr += "return ans;" + "\n";
+    resStr += "}" + "\n";
+    resStr += "int uniqueid = map.size() + 1;" + "\n";
+    resStr += "ans.put(\"id\", uniqueid);" + "\n";
+    resStr += "map.put(this, uniqueid);" + "\n";
+    resStr += "ans.put(\"type\", \"" + className + "\");" + "\n";
+    resStr += "JSONArray fieldValuePairs = new JSONArray();" + "\n";
+    resStr += "JSONObject curPair;" + "\n";
+    for (SingleFieldBuilder curField : fieldList) {
+      resStr += "curPair = new JSONObject();" + "\n";
+      if (primitiveOrStr(curField.getFieldType())) {
+        resStr += "curPair.put(\"" + curField.getFieldName() + "\", this." + curField.getFieldName() + ");" + "\n";
+      }
+      else {
+        resStr += "curPair.put(\"" + curField.getFieldName() + "\"," + curField.getFieldName() + ".toJSONHelper(map));" + "\n";
+      }         
+      resStr += "fieldValuePairs.add(curPair);" + "\n";
+    }    
+    resStr += "ans.put(\"values\", fieldValuePairs);" + "\n"; 
+    resStr += "return ans;" + "\n";
+    resStr += "}" + "\n" + "\n"; 
+    resStr += "public JSONObject toJSON() throws JSONException {" + "\n";
+    resStr += "return toJSONHelper(new HashMap<Object, Integer>());" + "\n";
+    resStr += "}" + "\n";
     return resStr;
   }
   //Generate the code of array type field
@@ -157,6 +182,7 @@ public class CodeBuilder {
         this.nonArrayCode(cur.getFieldName(), cur.getFieldType());
       }
       else if (cur.getDimension() >= 1) {
+        this.hasNoArray = false;
         //System.out.println(cur.getFieldName() + "is dimension" + cur.getDimension() + "\n");
         this.arrayCode(cur.getFieldName(), cur.getFieldType(), cur.getDimension());
         this.addToConstruct(cur);
@@ -168,6 +194,9 @@ public class CodeBuilder {
       return this.getPkgNImport() + this.getCodeStart() + this.getcodeEnd();
     }
     this.generateCode();
+    if (this.hasNoArray) {
+      return this.getPkgNImport() + this.getCodeStart() +  this.fieldCode  +  this.methodCode + getSerializer() + this.getcodeEnd();
+    }
     return this.getPkgNImport() + this.getCodeStart() +  this.fieldCode + this.getConstructor() +  this.methodCode + getSerializer() + this.getcodeEnd();
   }
 }

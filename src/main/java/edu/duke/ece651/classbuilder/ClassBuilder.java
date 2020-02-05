@@ -46,36 +46,28 @@ public class ClassBuilder {
     CodeBuilder codeB = new CodeBuilder(className, classMap.get(className), packageName);
     return codeB.getCode(); 
   }
-  /*
+  
   public void createAllClasses(String basePath) {
-    String path = basePath + className + ".java";
-    try {
-      File file = new File(path);
-      file.createNewFile();
-      PrintWriter out = new PrintWriter(file);
-      out.println(getSourceCode());
-      out.close();
-    } catch (IOException e) {
-      System.out.println("An error occurred.");
-    }  
-    
-  } */
-    
-/*
-class Main {
-  public static void main(String[] args) {
-    String str = "{\"classes\" : [{\"name\" : \"Test\", \"fields\" : [{\"name\" : \"x\", \"type\" : \"int\"}]}]}";
-    ClassBuilder cb = new ClassBuilder(str);
-    System.out.println(cb.className);
-    System.out.println(cb.name);
-    System.out.println(cb.type);
-    /*
-    for (Map.Entry<String, String> entry : cb.fields.entrySet()) {
-      String k = entry.getKey();
-      String v = entry.getValue();
-      System.out.println("Key: " + k + ", Value: " + v);
+    if (packageName != null) {
+      String pkgPath = packageName.replace('.', '/');
+      if (basePath.charAt(basePath.length() -1) != '/') {
+        basePath += "/" + pkgPath + "/";
+      }
+      else {
+        basePath += pkgPath + "/";
+      }
     }
-    
-  }
-*/
+    for (String curName : this.getClassNames()) {
+      String path = basePath + curName + ".java";
+      try {
+        File file = new File(path);
+        file.createNewFile();
+        PrintWriter out = new PrintWriter(file);
+        out.println(getSourceCode(curName));
+        out.close();
+      } catch (IOException e) {
+        System.out.println("An IO exception occurred in createAllClassed.\n");
+      }  
+    } 
+  } 
 }
