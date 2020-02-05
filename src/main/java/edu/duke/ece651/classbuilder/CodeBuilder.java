@@ -135,27 +135,22 @@ public class CodeBuilder {
     resStr += "JSONObject curPair;" + "\n";
     for (SingleFieldBuilder curField : fieldList) {
       resStr += "curPair = new JSONObject();" + "\n";
-      if (curField.getDimension() == 1) {
+      if (primitiveOrStr(curField.getFieldType())) {
+        resStr += "curPair.put(\"" + curField.getFieldName() + "\", this." + curField.getFieldName() + ");" + "\n";
+      }
+      else if (curField.getDimension() == 0) {
+        resStr += "curPair.put(\"" + curField.getFieldName() + "\"," + curField.getFieldName() + ".toJSONHelper(map));" + "\n";
+      }  
+      else {
         resStr += "arrayField = new JSONArray();" + "\n";
         resStr += "JSONObject curEle;" + "\n";
         resStr += "for (int i = 0; i < " + curField.getFieldName() + ".size(); i++) {" + "\n";
-        resStr += "curEle = new JSONObject();" + "\n";
-        if (primitiveOrStr(curField.getFieldType())) {
-          resStr += "curEle.put(\"" + curField.getFieldName() + "\", this." + curField.getFieldName() + ".get(i));" + "\n";      
-        }
-        else {
-          resStr += "curEle.put(\"" + curField.getFieldName() + "\", this." + curField.getFieldName() + ".get(i).toJSONHelper(map));" + "\n";      
-        }
+        resStr += "curEle = new JSONObject();" + "\n";      
+        resStr += "curEle.put(\"" + curField.getFieldName() + "\", this." + curField.getFieldName() + ".get(i).toJSONHelper(map));" + "\n";      
         resStr += "arrayField.add(curEle);" + "\n"; 
         resStr += "}" + "\n";
         resStr += "curPair.put(\"" + curField.getFieldName() + "\", arrayField);" + "\n";
-      }
-      else if (curField.getDimension() == 0 && primitiveOrStr(curField.getFieldType())) {
-        resStr += "curPair.put(\"" + curField.getFieldName() + "\", this." + curField.getFieldName() + ");" + "\n";
-      }
-      else {
-        resStr += "curPair.put(\"" + curField.getFieldName() + "\"," + curField.getFieldName() + ".toJSONHelper(map));" + "\n";
-      }         
+      }           
       resStr += "fieldValuePairs.add(curPair);" + "\n";
     }    
     resStr += "ans.put(\"values\", fieldValuePairs);" + "\n"; 
@@ -166,6 +161,7 @@ public class CodeBuilder {
     resStr += "}" + "\n";
     return resStr;
   }
+  
   //Generate the code of array type field
   private void arrayCode(String name, String type, int dim) {
     String nestCollection = getNestCollect(getWrapper(type), dim - 1);

@@ -141,10 +141,10 @@ out how to handle object, especially reference.
 Task: serialize array, and testing
 Estimated Time: 2h
 Target Deadline: 11:45am, Feb 5
-Actual Time:
-Actual Delivery:
-Commit ID:
-Comments:
+Actual Time: 1h42m
+Actual Delivery: 11:57am, Feb 5
+Commit ID: 6cbf68cc06e9bc51623320c9514ef6d0e82b02f0
+Comments: Only handle 1-d array.
 
 15.
 Task: deserialize, and testing

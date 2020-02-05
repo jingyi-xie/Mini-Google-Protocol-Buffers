@@ -1,4 +1,5 @@
 import java.util.*;
+import java.lang.*;
 import org.json.*;
 public class Office {
 private Faculty occupant;
@@ -22,27 +23,34 @@ return building;
 public void setBuilding(String x) {
 this.building = x;
 }
-public JSONObject toJSONHelper(HashMap<String, JSONObject> map) throws JSONException {
+public JSONObject toJSONHelper(HashMap<Object, Integer> map) throws JSONException {
 JSONObject ans = new JSONObject();
-ans.put("id", 1);
+if (map.containsKey(this)) {
+ans.put("ref", map.get(this));
+return ans;
+}
+int uniqueid = map.size() + 1;
+ans.put("id", uniqueid);
+map.put(this, uniqueid);
 ans.put("type", "Office");
 JSONArray fieldValuePairs = new JSONArray();
+JSONArray arrayField; // for array type field only
 JSONObject curPair;
 curPair = new JSONObject();
-curPair.put("occupant", occupant);
+curPair.put("occupant",occupant.toJSONHelper(map));
 fieldValuePairs.add(curPair);
 curPair = new JSONObject();
-curPair.put("number", number);
+curPair.put("number", this.number);
 fieldValuePairs.add(curPair);
 curPair = new JSONObject();
-curPair.put("building", building);
+curPair.put("building", this.building);
 fieldValuePairs.add(curPair);
 ans.put("values", fieldValuePairs);
 return ans;
 }
 
 public JSONObject toJSON() throws JSONException {
-return toJSONHelper(new HashMap<String, JSONObject>());
+return toJSONHelper(new HashMap<Object, Integer>());
 }
 }
 
