@@ -173,15 +173,15 @@ public class CodeBuilder {
     methodCode.append("return " + name + ".size();" + "\n");
     methodCode.append("}" + "\n");
     //add method
-    methodCode.append("public void add" + capFieldName + "(" + nestCollection + " x) {" + "\n");
+    methodCode.append("public void add" + capFieldName + "(" + (dim == 1 ? type : nestCollection) + " x) {" + "\n");
     methodCode.append(name + ".add(x);" + "\n");
     methodCode.append("}" + "\n"); 
     //Get method
-    methodCode.append("public " + nestCollection + " get" + capFieldName + "(int index) {" + "\n");
+    methodCode.append("public " + (dim == 1 ? type : nestCollection) + " get" + capFieldName + "(int index) {" + "\n");
     methodCode.append("return " + name + ".get(index);" + "\n");
     methodCode.append("}" + "\n");  
     //Set method
-    methodCode.append("public void set" + capFieldName + "(int index, " + nestCollection + " x) {" + "\n");
+    methodCode.append("public void set" + capFieldName + "(int index, " + (dim == 1 ? type : nestCollection) + " x) {" + "\n");
     methodCode.append(name + ".set(index, x);" + "\n");
     methodCode.append("}" + "\n");
   }
@@ -203,12 +203,12 @@ public class CodeBuilder {
   }
   public String getCode() {
     if (hasNoField) {
-      return this.getPkgNImport() + this.getCodeStart() + getSerializer() + this.getcodeEnd();
+      return this.getPkgNImport() + this.getCodeStart() + this.getSerializer() + this.getcodeEnd();
     }
     this.generateCode();
     if (this.hasNoArray) {
-      return this.getPkgNImport() + this.getCodeStart() +  this.fieldCode.toString()  +  this.methodCode.toString() + getSerializer() + this.getcodeEnd();
+      return this.getPkgNImport() + this.getCodeStart() +  this.fieldCode.toString()  +  this.methodCode.toString() + this.getSerializer() + this.getcodeEnd();
     }
-    return this.getPkgNImport() + this.getCodeStart() +  this.fieldCode.toString() + this.getConstructor() +  this.methodCode.toString() + getSerializer() + this.getcodeEnd();
+    return this.getPkgNImport() + this.getCodeStart() +  this.fieldCode.toString() + this.getConstructor() +  this.methodCode.toString() + this.getSerializer() + this.getcodeEnd();
   }
 }

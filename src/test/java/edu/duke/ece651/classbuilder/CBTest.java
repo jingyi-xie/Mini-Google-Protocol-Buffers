@@ -8,12 +8,42 @@ import java.io.*;
 
 public class CBTest {
   @Test
-  public void test_classbuilder() {
+  public void test_empty() {
     //String r = "{ 'classes' :[{'name' : 'Course', 'fields' : [ {'name' : 'instructor', 'type' : 'Faculty'},{'name' : 'numStudents', 'type' : 'int' },{'name' : 'grades', 'type' :'Grade'}]},{'name' : 'Office',  'fields' : [ {'name' : 'occupant', 'type': 'Faculty'},{'name' : 'number', 'type': 'int'},{'name' : 'building' , 'type': 'String'}]},{'name' : 'Faculty', 'fields' : [ {'name' : 'name', 'type' : 'String' },{'name' : 'taught', 'type' : Course'}]},{'name' : 'Grade', 'fields' : [ {'name' : 'course', 'type' : 'Course'},{'name' : 'student', 'type' : 'String'},{'name' : 'grade', 'type': 'double'}]}]}";
-    InputStream r = getClass().getResourceAsStream("/prims.json");
+    InputStream r = getClass().getResourceAsStream("/empty.json");
     ClassBuilder cb = new ClassBuilder(r);
     //System.out.println(cb.getClassNames());
     //System.out.println(cb.getSourceCode("Grade"));
     cb.createAllClasses("/home/jaryn/ece651-hwk1-tester/src/main/java");
   }
+  
+  @Test
+  public void test_simple() {
+    InputStream r = getClass().getResourceAsStream("/simple.json");
+    ClassBuilder cb = new ClassBuilder(r);
+    cb.createAllClasses("/home/jaryn/ece651-hwk1-tester/src/main/java");
+  }
+
+  @Test
+  public void test_prims() {
+    InputStream r = getClass().getResourceAsStream("/prims.json");
+    ClassBuilder cb = new ClassBuilder(r);
+    cb.createAllClasses("/home/jaryn/ece651-hwk1-tester/src/main/java");
+  }
+
+  @Test
+  public void test_simplearray() {
+    InputStream r = getClass().getResourceAsStream("/simplearray.json");
+    ClassBuilder cb = new ClassBuilder(r);
+    cb.createAllClasses("/home/jaryn/ece651-hwk1-tester/src/main/java");
+  }
+  
+  @Test
+  public void test_nameRef() {
+    InputStream r = getClass().getResourceAsStream("/arr.json");
+    ClassBuilder cb = new ClassBuilder(r);
+    cb.createAllClasses("/home/jaryn/ece651-hwk1-tester/src/main/java");
+  }
+
+
 }
