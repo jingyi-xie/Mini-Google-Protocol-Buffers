@@ -1,3 +1,0 @@
-{ "package" : "hwk1.testing.simplearray",
-
-  "classes" : [ {"name" : "Test", "fields" : [{"name" :"arr", "type" : {"e" : "int"}}]}]}

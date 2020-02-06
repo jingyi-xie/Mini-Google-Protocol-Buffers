@@ -201,7 +201,7 @@ public class CodeBuilder {
         //System.out.println(cur.getFieldName() + "is dimension 0\n");
         this.nonArrayCode(cur.getFieldName(), cur.getFieldType());
       }
-      else if (cur.getDimension() >= 1) {
+      else {
         this.hasNoArray = false;
         //System.out.println(cur.getFieldName() + "is dimension" + cur.getDimension() + "\n");
         this.arrayCode(cur.getFieldName(), cur.getFieldType(), cur.getDimension());

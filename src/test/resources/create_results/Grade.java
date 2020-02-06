@@ -38,13 +38,13 @@ JSONArray arrayField; // for array type field only
 JSONObject curPair;
 curPair = new JSONObject();
 curPair.put("course",course.toJSONHelper(map));
-fieldValuePairs.add(curPair);
+fieldValuePairs.put(curPair);
 curPair = new JSONObject();
 curPair.put("student", this.student);
-fieldValuePairs.add(curPair);
+fieldValuePairs.put(curPair);
 curPair = new JSONObject();
 curPair.put("grade", this.grade);
-fieldValuePairs.add(curPair);
+fieldValuePairs.put(curPair);
 ans.put("values", fieldValuePairs);
 return ans;
 }

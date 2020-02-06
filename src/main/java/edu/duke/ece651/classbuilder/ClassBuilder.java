@@ -56,15 +56,13 @@ public class ClassBuilder {
   
   //Create all the class and Deserializer
   public void createAllClasses(String basePath) {
+    if (basePath.charAt(basePath.length() -1) != '/') {
+      basePath += "/";
+    }
     //Handle package
-    if (packageName.length() == 0) {
+    if (packageName.length() != 0) {
       String pkgPath = packageName.replace('.', '/');
-      if (basePath.charAt(basePath.length() -1) != '/') {
-        basePath += "/" + pkgPath + "/";
-      }
-      else {
-        basePath += pkgPath + "/";
-      }
+      basePath += pkgPath + "/";
     }
     //For all the classes returned by getClassNames, generate the source code.
     for (String curName : this.getClassNames()) {

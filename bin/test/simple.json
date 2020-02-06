@@ -1,4 +1,0 @@
-{ "package" : "hwk1.testing.simple",
-   "classes" : [
-    {"name" : "Test", "fields" : [{"name" : "x", "type" : "int"}]}
-]}
