@@ -32,7 +32,7 @@ public class DeserializerBuilder {
         StringBuilder res = new StringBuilder();
         res.append("Map<Integer, Object> idMap;" + "\n");
         res.append("public Deserializer() {" + "\n");
-        res.append("idMap = new Map<>();");
+        res.append("this.idMap = new HashMap<>();");
         res.append("}" + "\n");
         return res.toString();
     }
@@ -50,29 +50,41 @@ public class DeserializerBuilder {
         //Map<Integer, Object> idMap; //////
 
       for (Map.Entry<String, ArrayList<SingleFieldBuilder>> curClass : myMap.entrySet()) {
-        resCode.append("public static " + curClass.getKey() + " read" + capName(curClass.getKey()) + "(JSONObject js) throws JSONException {\n");
+        resCode.append("public " + curClass.getKey() + " readHelper" + capName(curClass.getKey()) + "(JSONObject js) throws JSONException {\n");
         resCode.append("int id = js.optInt(\"id\");\n");
-        resCode.append("if (id != null && idMap.containsKey(id)) {\n");
-        resCode.append("return idMap.get(id);\n");
-        resCode.append(curClass.getKey() + "ans = new " + curClass.getKey() + "();\n");
+        resCode.append("if (idMap.containsKey(id)) {\n");
+        resCode.append("return (" + capName(curClass.getKey()) + ")idMap.get(id);\n");
+        resCode.append("}\n");
+        resCode.append(curClass.getKey() + " ans = new " + curClass.getKey() + "();\n");
         resCode.append("String type = js.optString(\"type\");\n");
         resCode.append("JSONArray valueArr = js.optJSONArray(\"values\");\n");
         resCode.append("int index = 0;\n");
+        resCode.append("JSONObject curPair;\n");
         for (SingleFieldBuilder curField : curClass.getValue()) {
-          resCode.append("JSONObject curPair = valueArr.get(index);\n");
+          resCode.append("curPair = (JSONObject)valueArr.get(index);\n");
           if (primitiveOrStr(curField.getFieldType())) {
             if (curField.getFieldType().equals("char")) {
-                resCode.append("ans.set" + capName(curField.getFieldName()) + "(curPair.getString(\"" + curField.getFieldName() + "\").charAt(0));\n");
+                resCode.append("ans.set" + capName(curField.getFieldName()) + "((char)curPair.getInt(\"" + curField.getFieldName() + "\"));\n");
+            }
+            else if (curField.getFieldType().equals("short")) {
+                resCode.append("ans.set" + capName(curField.getFieldName()) + "((short)curPair.getInt(\"" + curField.getFieldName() + "\"));\n");
+            }
+            else if (curField.getFieldType().equals("byte")) {
+                resCode.append("ans.set" + capName(curField.getFieldName()) + "((byte)curPair.getInt(\"" + curField.getFieldName() + "\"));\n");
             }
             else {
-                resCode.append("ans.set" + capName(curField.getFieldName()) + "(curPair.get" + capName(curField.getFieldType()) + "(\"" + curField.getFieldName() + "\").charAt(0));\n");
+                resCode.append("ans.set" + capName(curField.getFieldName()) + "(curPair.get" + capName(curField.getFieldType()) + "(\"" + curField.getFieldName() + "\"));\n");
             }
           }
           resCode.append("index++;\n");
         }
         resCode.append("idMap.put(id, ans);\n");
-        resCode.append("return ans;\n");
+        resCode.append("return (" + capName(curClass.getKey()) + ")ans;\n");
         resCode.append("}\n"); 
+        resCode.append("public static " + curClass.getKey() + " read" + capName(curClass.getKey()) + "(JSONObject js) throws JSONException {\n");
+        resCode.append("Deserializer ds = new Deserializer();\n");
+        resCode.append("return ds.readHelper" + capName(curClass.getKey()) + "(js);\n");
+        resCode.append("}\n");
       }
     }
     public String getDeserializer() {

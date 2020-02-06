@@ -151,7 +151,7 @@ public class CodeBuilder {
         resStr.append("}" + "\n");
         resStr.append("curPair.put(\"" + curField.getFieldName() + "\", arrayField);" + "\n");
       }           
-      resStr.append("fieldValuePairs.add(curPair);" + "\n");
+      resStr.append("fieldValuePairs.put(curPair);" + "\n");
     }    
     resStr.append("ans.put(\"values\", fieldValuePairs);" + "\n"); 
     resStr.append("return ans;" + "\n");
@@ -203,7 +203,7 @@ public class CodeBuilder {
   }
   public String getCode() {
     if (hasNoField) {
-      return this.getPkgNImport() + this.getCodeStart() + this.getcodeEnd();
+      return this.getPkgNImport() + this.getCodeStart() + getSerializer() + this.getcodeEnd();
     }
     this.generateCode();
     if (this.hasNoArray) {
