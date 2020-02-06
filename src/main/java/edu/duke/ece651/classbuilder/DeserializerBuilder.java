@@ -30,7 +30,7 @@ public class DeserializerBuilder {
     }
     private String getFieldNConctructor() {
         StringBuilder res = new StringBuilder();
-        res.append("Map<Integer, Object> idMap;" + "\n");
+        res.append("HashMap<Integer, Object> idMap;" + "\n");
         res.append("public Deserializer() {" + "\n");
         res.append("this.idMap = new HashMap<>();");
         res.append("}" + "\n");
@@ -50,7 +50,7 @@ public class DeserializerBuilder {
         //Map<Integer, Object> idMap; //////
 
       for (Map.Entry<String, ArrayList<SingleFieldBuilder>> curClass : myMap.entrySet()) {
-        resCode.append("public " + curClass.getKey() + " readHelper" + capName(curClass.getKey()) + "(JSONObject js) throws JSONException {\n");
+        resCode.append("public " + curClass.getKey() + " readHelper" + capName(curClass.getKey()) + "(JSONObject js, Map<Integer, Object> idMap) throws JSONException {\n");
         resCode.append("int id = js.optInt(\"id\");\n");
         resCode.append("if (idMap.containsKey(id)) {\n");
         resCode.append("return (" + capName(curClass.getKey()) + ")idMap.get(id);\n");
@@ -60,6 +60,7 @@ public class DeserializerBuilder {
         resCode.append("JSONArray valueArr = js.optJSONArray(\"values\");\n");
         resCode.append("int index = 0;\n");
         resCode.append("JSONObject curPair;\n");
+        int obj_index = 0;
         for (SingleFieldBuilder curField : curClass.getValue()) {
           resCode.append("curPair = (JSONObject)valueArr.get(index);\n");
           if (primitiveOrStr(curField.getFieldType())) {
@@ -76,14 +77,20 @@ public class DeserializerBuilder {
                 resCode.append("ans.set" + capName(curField.getFieldName()) + "(curPair.get" + capName(curField.getFieldType()) + "(\"" + curField.getFieldName() + "\"));\n");
             }
           }
+          else {
+            resCode.append(curField.getFieldType() + " obj_" + obj_index + " = new " + curField.getFieldType() + "();\n");
+            resCode.append(" obj_" + obj_index + " = readHelper" + capName(curField.getFieldType()) + "(js, idMap);\n");
+            resCode.append("ans.set" + capName(curField.getFieldName()) + "(obj_" + obj_index + ");\n");
+          }
           resCode.append("index++;\n");
+          obj_index++;
         }
         resCode.append("idMap.put(id, ans);\n");
         resCode.append("return (" + capName(curClass.getKey()) + ")ans;\n");
         resCode.append("}\n"); 
         resCode.append("public static " + curClass.getKey() + " read" + capName(curClass.getKey()) + "(JSONObject js) throws JSONException {\n");
         resCode.append("Deserializer ds = new Deserializer();\n");
-        resCode.append("return ds.readHelper" + capName(curClass.getKey()) + "(js);\n");
+        resCode.append("return ds.readHelper" + capName(curClass.getKey()) + "(js, ds.idMap);\n");
         resCode.append("}\n");
       }
     }

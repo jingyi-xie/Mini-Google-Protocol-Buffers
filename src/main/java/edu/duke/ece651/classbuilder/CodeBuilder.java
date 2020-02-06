@@ -147,7 +147,7 @@ public class CodeBuilder {
         resStr.append("for (int i = 0; i < " + curField.getFieldName() + ".size(); i++) {" + "\n");
         resStr.append("curEle = new JSONObject();" + "\n");      
         resStr.append("curEle.put(\"" + curField.getFieldName() + "\", this." + curField.getFieldName() + ".get(i).toJSONHelper(map));" + "\n");      
-        resStr.append("arrayField.add(curEle);" + "\n"); 
+        resStr.append("arrayField.put(curEle);" + "\n"); 
         resStr.append("}" + "\n");
         resStr.append("curPair.put(\"" + curField.getFieldName() + "\", arrayField);" + "\n");
       }           
