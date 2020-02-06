@@ -8,9 +8,9 @@ public class CodeBuilder {
   private String className;
   private String packageName;
   private ArrayList<SingleFieldBuilder> fieldList;
-  private String constructer;
-  private String fieldCode;
-  private String methodCode;
+  private StringBuilder constructer;
+  private StringBuilder fieldCode;
+  private StringBuilder methodCode;
   private boolean hasNoField;
   private boolean hasNoArray;
 
@@ -20,20 +20,20 @@ public class CodeBuilder {
     this.fieldList = list;
     this.hasNoField = (list.size() == 0);
     this.hasNoArray = true;
-    this.constructer = "";
-    this.fieldCode = "";
-    this.methodCode = "";
+    this.constructer = new StringBuilder();
+    this.fieldCode = new StringBuilder();
+    this.methodCode = new StringBuilder();
   }
   //Code for package and import
   private String getPkgNImport()  {
-    String res = "";
+    StringBuilder res = new StringBuilder();
     if (!packageName.equals("")) {
-      res += "package " + packageName + ";" + "\n";
+      res.append("package " + packageName + ";" + "\n");
     }
-    res += "import java.util.*" + ";" + "\n";
-    res += "import java.lang.*" + ";" + "\n";
-    res += "import org.json.*" + ";" + "\n";
-    return res;
+    res.append("import java.util.*" + ";" + "\n");
+    res.append("import java.lang.*" + ";" + "\n");
+    res.append("import org.json.*" + ";" + "\n");
+    return res.toString();
   }
   //Generate the start of source code
   private String getCodeStart() {
@@ -80,7 +80,7 @@ public class CodeBuilder {
     //int curDim = curField.getDimension();  
     String temp = getWrapper(curField.getFieldType());
     temp = "this." + curField.getFieldName() + " = new ArrayList<>()" + ";" + "\n";
-    this.constructer += temp;
+    this.constructer.append(temp);
   }
   private String getConstructor() {
     String constructStart = "public " + className + "()" + " {" + "\n";  
@@ -89,16 +89,16 @@ public class CodeBuilder {
   }
   //Generate the code of non-array type: field + method
   private void nonArrayCode(String name, String type) {
-    fieldCode += "private " + type + " " + name + ";" + "\n";
+    fieldCode.append("private " + type + " " + name + ";" + "\n");
     String capFieldName = capName(name);
     //Get method
-    methodCode += "public " + type + " get" + capFieldName + "() {" + "\n";
-    methodCode += "return " + name + ";" + "\n";
-    methodCode += "}" + "\n";  
+    methodCode.append("public " + type + " get" + capFieldName + "() {" + "\n");
+    methodCode.append("return " + name + ";" + "\n");
+    methodCode.append("}" + "\n");  
     //Set method
-    methodCode += "public void set" + capFieldName + "(" + type + " x) {" + "\n";
-    methodCode += "this." + name + " = x;" + "\n";
-    methodCode += "}" + "\n";  
+    methodCode.append("public void set" + capFieldName + "(" + type + " x) {" + "\n");
+    methodCode.append("this." + name + " = x;" + "\n");
+    methodCode.append("}" + "\n");  
   }
   private String getNestCollect(String type, int dim) {
     if (dim == 0) {
@@ -119,71 +119,71 @@ public class CodeBuilder {
           type.equals("String");
   }
   private String getSerializer() {
-    String resStr = "";
-    resStr += "public JSONObject toJSONHelper(HashMap<Object, Integer> map) throws JSONException {" + "\n";
-    resStr += "JSONObject ans = new JSONObject();" + "\n";
-    resStr += "if (map.containsKey(this)) {" + "\n";
-    resStr += "ans.put(\"ref\", map.get(this));" + "\n";
-    resStr += "return ans;" + "\n";
-    resStr += "}" + "\n";
-    resStr += "int uniqueid = map.size() + 1;" + "\n";
-    resStr += "ans.put(\"id\", uniqueid);" + "\n";
-    resStr += "map.put(this, uniqueid);" + "\n";
-    resStr += "ans.put(\"type\", \"" + className + "\");" + "\n";
-    resStr += "JSONArray fieldValuePairs = new JSONArray();" + "\n";
-    resStr += "JSONArray arrayField; // for array type field only" + "\n";
-    resStr += "JSONObject curPair;" + "\n";
+    StringBuilder resStr = new StringBuilder();
+    resStr.append("public JSONObject toJSONHelper(HashMap<Object, Integer> map) throws JSONException {" + "\n");
+    resStr.append("JSONObject ans = new JSONObject();" + "\n");
+    resStr.append("if (map.containsKey(this)) {" + "\n");
+    resStr.append("ans.put(\"ref\", map.get(this));" + "\n");
+    resStr.append("return ans;" + "\n");
+    resStr.append("}" + "\n");
+    resStr.append("int uniqueid = map.size() + 1;" + "\n");
+    resStr.append("ans.put(\"id\", uniqueid);" + "\n");
+    resStr.append("map.put(this, uniqueid);" + "\n");
+    resStr.append("ans.put(\"type\", \"" + className + "\");" + "\n");
+    resStr.append("JSONArray fieldValuePairs = new JSONArray();" + "\n");
+    resStr.append("JSONArray arrayField; // for array type field only" + "\n");
+    resStr.append("JSONObject curPair;" + "\n");
     for (SingleFieldBuilder curField : fieldList) {
-      resStr += "curPair = new JSONObject();" + "\n";
+      resStr.append("curPair = new JSONObject();" + "\n");
       if (primitiveOrStr(curField.getFieldType())) {
-        resStr += "curPair.put(\"" + curField.getFieldName() + "\", this." + curField.getFieldName() + ");" + "\n";
+        resStr.append("curPair.put(\"" + curField.getFieldName() + "\", this." + curField.getFieldName() + ");" + "\n");
       }
       else if (curField.getDimension() == 0) {
-        resStr += "curPair.put(\"" + curField.getFieldName() + "\"," + curField.getFieldName() + ".toJSONHelper(map));" + "\n";
+        resStr.append("curPair.put(\"" + curField.getFieldName() + "\"," + curField.getFieldName() + ".toJSONHelper(map));" + "\n");
       }  
       else {
-        resStr += "arrayField = new JSONArray();" + "\n";
-        resStr += "JSONObject curEle;" + "\n";
-        resStr += "for (int i = 0; i < " + curField.getFieldName() + ".size(); i++) {" + "\n";
-        resStr += "curEle = new JSONObject();" + "\n";      
-        resStr += "curEle.put(\"" + curField.getFieldName() + "\", this." + curField.getFieldName() + ".get(i).toJSONHelper(map));" + "\n";      
-        resStr += "arrayField.add(curEle);" + "\n"; 
-        resStr += "}" + "\n";
-        resStr += "curPair.put(\"" + curField.getFieldName() + "\", arrayField);" + "\n";
+        resStr.append("arrayField = new JSONArray();" + "\n");
+        resStr.append("JSONObject curEle;" + "\n");
+        resStr.append("for (int i = 0; i < " + curField.getFieldName() + ".size(); i++) {" + "\n");
+        resStr.append("curEle = new JSONObject();" + "\n");      
+        resStr.append("curEle.put(\"" + curField.getFieldName() + "\", this." + curField.getFieldName() + ".get(i).toJSONHelper(map));" + "\n");      
+        resStr.append("arrayField.add(curEle);" + "\n"); 
+        resStr.append("}" + "\n");
+        resStr.append("curPair.put(\"" + curField.getFieldName() + "\", arrayField);" + "\n");
       }           
-      resStr += "fieldValuePairs.add(curPair);" + "\n";
+      resStr.append("fieldValuePairs.add(curPair);" + "\n");
     }    
-    resStr += "ans.put(\"values\", fieldValuePairs);" + "\n"; 
-    resStr += "return ans;" + "\n";
-    resStr += "}" + "\n" + "\n"; 
-    resStr += "public JSONObject toJSON() throws JSONException {" + "\n";
-    resStr += "return toJSONHelper(new HashMap<Object, Integer>());" + "\n";
-    resStr += "}" + "\n";
-    return resStr;
+    resStr.append("ans.put(\"values\", fieldValuePairs);" + "\n"); 
+    resStr.append("return ans;" + "\n");
+    resStr.append("}" + "\n" + "\n"); 
+    resStr.append("public JSONObject toJSON() throws JSONException {" + "\n");
+    resStr.append("return toJSONHelper(new HashMap<Object, Integer>());" + "\n");
+    resStr.append("}" + "\n");
+    return resStr.toString();
   }
-  
+
   //Generate the code of array type field
   private void arrayCode(String name, String type, int dim) {
     String nestCollection = getNestCollect(getWrapper(type), dim - 1);
     String nestArrList = getNestArrList(nestCollection);
-    fieldCode += "private " +  nestArrList + " " + name + " ;" + "\n";
+    fieldCode.append("private " +  nestArrList + " " + name + ";" + "\n");
     String capFieldName = capName(name);
     //num method
-    methodCode += "public int " + "num" + capFieldName + "() {" + "\n";
-    methodCode += "return " + name + ".size();" + "\n";
-    methodCode += "}" + "\n";
+    methodCode.append("public int " + "num" + capFieldName + "() {" + "\n");
+    methodCode.append("return " + name + ".size();" + "\n");
+    methodCode.append("}" + "\n");
     //add method
-    methodCode += "public void add" + capFieldName + "(" + nestCollection + " x) {" + "\n";
-    methodCode += name + ".add(x);" + "\n";
-    methodCode += "}" + "\n"; 
+    methodCode.append("public void add" + capFieldName + "(" + nestCollection + " x) {" + "\n");
+    methodCode.append(name + ".add(x);" + "\n");
+    methodCode.append("}" + "\n"); 
     //Get method
-    methodCode += "public " + nestCollection + " get" + capFieldName + "(int index) {" + "\n";
-    methodCode += "return " + name + ".get(index);" + "\n";
-    methodCode += "}" + "\n";  
+    methodCode.append("public " + nestCollection + " get" + capFieldName + "(int index) {" + "\n");
+    methodCode.append("return " + name + ".get(index);" + "\n");
+    methodCode.append("}" + "\n");  
     //Set method
-    methodCode += "public void set" + capFieldName + "(int index, " + nestCollection + " x) {" + "\n";
-    methodCode += name + ".set(index, x);" + "\n";
-    methodCode += "}" + "\n";
+    methodCode.append("public void set" + capFieldName + "(int index, " + nestCollection + " x) {" + "\n");
+    methodCode.append(name + ".set(index, x);" + "\n");
+    methodCode.append("}" + "\n");
   }
   private void generateCode() {
     //this.codeStart();
@@ -207,8 +207,8 @@ public class CodeBuilder {
     }
     this.generateCode();
     if (this.hasNoArray) {
-      return this.getPkgNImport() + this.getCodeStart() +  this.fieldCode  +  this.methodCode + getSerializer() + this.getcodeEnd();
+      return this.getPkgNImport() + this.getCodeStart() +  this.fieldCode.toString()  +  this.methodCode.toString() + getSerializer() + this.getcodeEnd();
     }
-    return this.getPkgNImport() + this.getCodeStart() +  this.fieldCode + this.getConstructor() +  this.methodCode + getSerializer() + this.getcodeEnd();
+    return this.getPkgNImport() + this.getCodeStart() +  this.fieldCode.toString() + this.getConstructor() +  this.methodCode.toString() + getSerializer() + this.getcodeEnd();
   }
 }

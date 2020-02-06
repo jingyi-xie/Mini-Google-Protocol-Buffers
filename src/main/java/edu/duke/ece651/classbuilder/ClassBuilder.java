@@ -68,6 +68,17 @@ public class ClassBuilder {
       } catch (IOException e) {
         System.out.println("An IO exception occurred in createAllClassed.\n");
       }  
-    } 
+    }
+    String deserialpath = basePath + "Deserializer.java";
+    try {
+      File file = new File(deserialpath);
+      file.createNewFile();
+      PrintWriter out = new PrintWriter(file);
+      DeserializerBuilder db = new DeserializerBuilder(classMap, packageName);
+      out.println(db.getDeserializer());
+      out.close();
+    } catch (IOException e) {
+      System.out.println("An IO exception occurred in createAllClassed.\n");
+    }  
   } 
 }
