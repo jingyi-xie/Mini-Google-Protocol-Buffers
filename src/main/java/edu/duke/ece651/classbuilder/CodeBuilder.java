@@ -14,6 +14,7 @@ public class CodeBuilder {
   private boolean hasNoField;
   private boolean hasNoArray;
 
+  //Constructor for CodeBuilder
   public CodeBuilder(String name, ArrayList<SingleFieldBuilder> list, String pkgName) {
     this.className = name;
     this.packageName = pkgName;
@@ -75,13 +76,14 @@ public class CodeBuilder {
     }
     return type;
   }
-  //
+  //Add the current field to the constructor
   private void addToConstruct(SingleFieldBuilder curField) {
     //int curDim = curField.getDimension();  
     String temp = getWrapper(curField.getFieldType());
     temp = "this." + curField.getFieldName() + " = new ArrayList<>()" + ";" + "\n";
     this.constructer.append(temp);
   }
+  //Get the constructor: start + nody + end
   private String getConstructor() {
     String constructStart = "public " + className + "()" + " {" + "\n";  
     String constructEnd = "}" + "\n";
@@ -100,6 +102,7 @@ public class CodeBuilder {
     methodCode.append("this." + name + " = x;" + "\n");
     methodCode.append("}" + "\n");  
   }
+  //Get the Collection of multi-dimensional array, then use getArrayList to add the outer layer
   private String getNestCollect(String type, int dim) {
     if (dim == 0) {
       return type;
@@ -110,16 +113,20 @@ public class CodeBuilder {
     }
     return res;
   }
+  //Get the type of multi-dimensinal array
   private String getNestArrList(String input) {
     return "ArrayList<" + input + ">";
   }
+  //Return true if primitive type or String
   private boolean primitiveOrStr(String type) {
     return type.equals("boolean") || type.equals("byte") || type.equals("char") || type.equals("short") || 
           type.equals("int") || type.equals("long") || type.equals("float") || type.equals("double") || 
           type.equals("String");
   }
+  //Get the code of serializer
   private String getSerializer() {
     StringBuilder resStr = new StringBuilder();
+    //Serializer helper function
     resStr.append("public JSONObject toJSONHelper(HashMap<Object, Integer> map) throws JSONException {" + "\n");
     resStr.append("JSONObject ans = new JSONObject();" + "\n");
     resStr.append("if (map.containsKey(this)) {" + "\n");
@@ -156,6 +163,7 @@ public class CodeBuilder {
     resStr.append("ans.put(\"values\", fieldValuePairs);" + "\n"); 
     resStr.append("return ans;" + "\n");
     resStr.append("}" + "\n" + "\n"); 
+    //toJSON method
     resStr.append("public JSONObject toJSON() throws JSONException {" + "\n");
     resStr.append("return toJSONHelper(new HashMap<Object, Integer>());" + "\n");
     resStr.append("}" + "\n");
@@ -201,11 +209,14 @@ public class CodeBuilder {
       }
     }
   }
+  //Get the source code of the current class
   public String getCode() {
+    //If no field
     if (hasNoField) {
       return this.getPkgNImport() + this.getCodeStart() + this.getSerializer() + this.getcodeEnd();
     }
     this.generateCode();
+    //If only primitive type and stings
     if (this.hasNoArray) {
       return this.getPkgNImport() + this.getCodeStart() +  this.fieldCode.toString()  +  this.methodCode.toString() + this.getSerializer() + this.getcodeEnd();
     }

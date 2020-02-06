@@ -7,11 +7,14 @@ public class DeserializerBuilder {
     private StringBuilder resCode;
     private String packageName;
 
+
+    //Constructor for deserializer
     public DeserializerBuilder(Map<String, ArrayList<SingleFieldBuilder>> m, String pkgName) {
       this.myMap = m;
       this.resCode = new StringBuilder();
       this.packageName = pkgName;
     }
+    //Get the package and import information
     private String getPkgNImport()  {
         StringBuilder res = new StringBuilder();
         if (!packageName.equals("")) {
@@ -22,12 +25,15 @@ public class DeserializerBuilder {
         res.append("import org.json.*" + ";\n");
         return res.toString();
     }
+    //Get the start code of deserializer
     private String getCodeStart() {
       return "public class Deserializer {\n";
     }
+    //get the end code of deserializer
     private String getcodeEnd() {
       return "}" + "\n";
     }
+    //Get the field declaration and constructor
     private String getFieldNConctructor() {
         StringBuilder res = new StringBuilder();
         res.append("HashMap<Integer, Object> idMap;" + "\n");
@@ -36,14 +42,17 @@ public class DeserializerBuilder {
         res.append("}" + "\n");
         return res.toString();
     }
+    //Captialize the first character of typename
     private String capName(String name) {
       return name.substring(0, 1).toUpperCase() + name.substring(1);
     }
+    //return true if primitive type or strings
     private boolean primitiveOrStr(String type) {
         return type.equals("boolean") || type.equals("byte") || type.equals("char") || type.equals("short") || 
               type.equals("int") || type.equals("long") || type.equals("float") || type.equals("double") || 
               type.equals("String");
     }
+    //get the wrapper of primitive type
     private String getWrapper(String type) {
         if (type.equals("boolean")) {
           return "Boolean";
@@ -70,27 +79,26 @@ public class DeserializerBuilder {
           return "Double";
         }
         return type;
-      }
+    }
+    //Generate the core part of deserializer
     private void generateCode() {
-
-        //JSONObject js;////////
-        //Map<Integer, Object> idMap; //////
-
       for (Map.Entry<String, ArrayList<SingleFieldBuilder>> curClass : myMap.entrySet()) {
         resCode.append("public " + curClass.getKey() + " readHelper" + capName(curClass.getKey()) + "(JSONObject js, Map<Integer, Object> idMap) throws JSONException {\n");
-        resCode.append("int id = js.optInt(\"id\");\n");
+        resCode.append("int id = js.getInt(\"id\");\n");
+        //If already exists in map, use the reference to that object
         resCode.append("if (idMap.containsKey(id)) {\n");
         resCode.append("return (" + capName(curClass.getKey()) + ")idMap.get(id);\n");
         resCode.append("}\n");
         resCode.append(curClass.getKey() + " ans = new " + curClass.getKey() + "();\n");
-        resCode.append("String type = js.optString(\"type\");\n");
-        resCode.append("JSONArray valueArr = js.optJSONArray(\"values\");\n");
+        resCode.append("String type = js.getString(\"type\");\n");
+        resCode.append("JSONArray valueArr = js.getJSONArray(\"values\");\n");
         resCode.append("int index = 0;\n");
         resCode.append("JSONObject curPair;\n");
         int obj_index = 0;
         for (SingleFieldBuilder curField : curClass.getValue()) {
           resCode.append("curPair = valueArr.getJSONObject(index);\n");
           if (primitiveOrStr(curField.getFieldType())) {
+            //No getChar, use getInt instead, then cast to char
             if (curField.getFieldType().equals("char")) {
                 if (curField.getDimension() == 0) {
                     resCode.append("ans.set" + capName(curField.getFieldName()) + "((char)curPair.getInt(\"" + curField.getFieldName() + "\"));\n");
@@ -101,6 +109,7 @@ public class DeserializerBuilder {
                     resCode.append("}\n");
                 }
             }
+            //No getShort, use getInt instead, then cast to short
             else if (curField.getFieldType().equals("short")) {
                 if (curField.getDimension() == 0) {
                     resCode.append("ans.set" + capName(curField.getFieldName()) + "((short)curPair.getInt(\"" + curField.getFieldName() + "\"));\n");
@@ -111,6 +120,7 @@ public class DeserializerBuilder {
                     resCode.append("}\n");
                 }
             }
+            //No getByte, use getInt instead, then cast to byte
             else if (curField.getFieldType().equals("byte")) {
                 if (curField.getDimension() == 0) {
                     resCode.append("ans.set" + capName(curField.getFieldName()) + "((byte)curPair.getInt(\"" + curField.getFieldName() + "\"));\n");
@@ -121,6 +131,7 @@ public class DeserializerBuilder {
                     resCode.append("}\n");
                 }
             }
+            //Other types
             else {
                 if (curField.getDimension() == 0) {
                     resCode.append("ans.set" + capName(curField.getFieldName()) + "(curPair.get" + capName(curField.getFieldType()) + "(\"" + curField.getFieldName() + "\"));\n");
@@ -132,6 +143,7 @@ public class DeserializerBuilder {
                 }
             }
           }
+          //Object type
           else {
               if (curField.getDimension() == 0) {
                 resCode.append(curField.getFieldType() + " obj_" + obj_index + " = new " + curField.getFieldType() + "();\n");
@@ -156,6 +168,7 @@ public class DeserializerBuilder {
         resCode.append("}\n");
       }
     }
+    //Get the code of deserializer
     public String getDeserializer() {
         this.generateCode();
         return this.getPkgNImport() + this.getCodeStart() + this.getFieldNConctructor() + this.resCode.toString() + this.getcodeEnd();
