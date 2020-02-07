@@ -177,7 +177,7 @@ Comments: Learned how to test exception.
 Task: write reflections
 Estimated Time: 1.5h
 Target Deadline: 8:30pm, Feb 6
-Actual Time:
-Actual Delivery:
-Commit ID:
-Comments:
+Actual Time: 49m
+Actual Delivery: 10:43pm, Feb 6
+Commit ID: 8410df1188d3d9ecb29a01ec3ae8ddd7378bed6e
+Comments: Learned a lot in this project, but still has big room for improvement.

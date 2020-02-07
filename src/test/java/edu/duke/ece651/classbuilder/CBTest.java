@@ -30,7 +30,7 @@ public class CBTest {
   public void test_empty() {
     InputStream r = getClass().getResourceAsStream("/empty.json");
     ClassBuilder cb = new ClassBuilder(r);
-    cb.createAllClasses("/home/jaryn/ece651-hwk1-tester/src/main/java");
+    //cb.createAllClasses("/home/jaryn/ece651-hwk1-tester/src/main/java");
     cb.createAllClasses("src/test/resources/create_results");
   }
   
@@ -38,7 +38,7 @@ public class CBTest {
   public void test_simple() {
     InputStream r = getClass().getResourceAsStream("/simple.json");
     ClassBuilder cb = new ClassBuilder(r);
-    cb.createAllClasses("/home/jaryn/ece651-hwk1-tester/src/main/java");
+    //cb.createAllClasses("/home/jaryn/ece651-hwk1-tester/src/main/java");
     cb.createAllClasses("src/test/resources/create_results");
   }
 
@@ -46,7 +46,7 @@ public class CBTest {
   public void test_prims() {
     InputStream r = getClass().getResourceAsStream("/prims.json");
     ClassBuilder cb = new ClassBuilder(r);
-    cb.createAllClasses("/home/jaryn/ece651-hwk1-tester/src/main/java");
+    //cb.createAllClasses("/home/jaryn/ece651-hwk1-tester/src/main/java");
     cb.createAllClasses("src/test/resources/create_results");
   }
 
@@ -54,7 +54,7 @@ public class CBTest {
   public void test_simplearray() {
     InputStream r = getClass().getResourceAsStream("/simplearray.json");
     ClassBuilder cb = new ClassBuilder(r);
-    cb.createAllClasses("/home/jaryn/ece651-hwk1-tester/src/main/java");
+    //cb.createAllClasses("/home/jaryn/ece651-hwk1-tester/src/main/java");
     cb.createAllClasses("src/test/resources/create_results");
   }
 
@@ -62,7 +62,7 @@ public class CBTest {
   public void test_nameRef() {
     InputStream r = getClass().getResourceAsStream("/nameRef.json");
     ClassBuilder cb = new ClassBuilder(r);
-    cb.createAllClasses("/home/jaryn/ece651-hwk1-tester/src/main/java");
+    //cb.createAllClasses("/home/jaryn/ece651-hwk1-tester/src/main/java");
     cb.createAllClasses("src/test/resources/create_results");
   }
 
