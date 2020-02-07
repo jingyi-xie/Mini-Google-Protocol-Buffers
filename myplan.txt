@@ -150,39 +150,30 @@ Comments: Only handle 1-d array.
 Task: deserialize, and testing
 Estimated Time: 3h
 Target Deadline: 11pm, Feb 5
-Actual Time:
-Actual Delivery:
-Commit ID:
-Comments:
+Actual Time: 3h52min
+Actual Delivery: 02:19am, Feb 6
+Commit ID: ea80ab99c886aeb95d18f265330171d85b60229a
+Comments: Too many corner cases to consider. No getShort, getByte, and getChar needs special handling.
 
 16.
 Task: handle cycle in reference graph, and testing
 Estimated Time: 3h
 Target Deadline: 11am, Feb 6
-Actual Time:
-Actual Delivery:
-Commit ID:
-Comments:
+Actual Time: 1h
+Actual Delivery: 2:17pm, Feb 6
+Commit ID: b90f7b5bc5b1806f92b56fbf5083c8146c1ebfa5
+Comments: This task actually comes with the earlier ones.
 
 17.
-Task: handle corner cases and exception
-Estimated Time: 3h
-Target Deadline: 3pm, Feb 6
-Actual Time:
-Actual Delivery:
-Commit ID:
-Comments:
-
-18.
 Task: final testing
 Estimated Time: 3h
 Target Deadline: 6：45pm, Feb 6
-Actual Time:
-Actual Delivery:
-Commit ID:
-Comments:
+Actual Time: 5h
+Actual Delivery: 6:39pm, Feb 6
+Commit ID: c14aa5c024de24930ef07ae18b90ada4ae53a1e9
+Comments: Learned how to test exception.
 
-19.
+18.
 Task: write reflections
 Estimated Time: 1.5h
 Target Deadline: 8:30pm, Feb 6
