@@ -52,23 +52,29 @@ public class DeserializerBuilder {
             type.equals("int") || type.equals("long") || type.equals("float") || type.equals("double") || 
             type.equals("String");
   }
-
+  
   //Generate the core part of deserializer
   private void generateCode() {
     for (Map.Entry<String, ArrayList<SingleFieldBuilder>> curClass : myMap.entrySet()) {
-      resCode.append("public " + curClass.getKey() + " readHelper" + capName(curClass.getKey()) + "(JSONObject js, Map<Integer, Object> idMap) throws JSONException {\n");
-      resCode.append("int id = js.getInt(\"id\");\n");
+      resCode.append("public static " + curClass.getKey() + " readHelper" + capName(curClass.getKey()) + "(JSONObject js, Map<Integer, Object> idMap) {\n");
+      resCode.append("int id;\n");
+      resCode.append("if (js.opt(\"id\") == null) { \n");
+      resCode.append("id = js.getInt(\"ref\");");
+      resCode.append("}\n");
+      resCode.append("else {\n");
+      resCode.append("id = js.getInt(\"id\");\n");
+      resCode.append("}\n");
       //If already exists in map, use the reference to that object
       resCode.append("if (idMap.containsKey(id)) {\n");
       resCode.append("return (" + capName(curClass.getKey()) + ")idMap.get(id);\n");
       resCode.append("}\n");
       resCode.append(curClass.getKey() + " ans = new " + curClass.getKey() + "();\n");
-      resCode.append("String type = js.getString(\"type\");\n");
-      resCode.append("JSONArray valueArr = js.getJSONArray(\"values\");\n");
+      resCode.append("JSONArray valueArr = new JSONArray(); \n valueArr = js.getJSONArray(\"values\");\n");
       resCode.append("int index = 0;\n");
       resCode.append("JSONObject curPair;\n");
       int obj_index = 0;
       for (SingleFieldBuilder curField : curClass.getValue()) {
+        resCode.append("curPair = new JSONObject();\n");
         resCode.append("curPair = valueArr.getJSONObject(index);\n");
         if (primitiveOrStr(curField.getFieldType())) {
           //No getChar, use getInt instead, then cast to char
@@ -136,9 +142,9 @@ public class DeserializerBuilder {
       resCode.append("return (" + capName(curClass.getKey()) + ")ans;\n");
       resCode.append("}\n"); 
       resCode.append("public static " + curClass.getKey() + " read" + capName(curClass.getKey()) + "(JSONObject js) throws JSONException {\n");
-      resCode.append("Deserializer ds = new Deserializer();\n");
+      //resCode.append("Deserializer ds = new Deserializer();\n");
       // resCode.append("return ds.readHelper" + capName(curClass.getKey()) + "(js, ds.idMap);\n");
-      resCode.append("return ds.readHelper" + capName(curClass.getKey()) + "(js, new HashMap<Integer, Object>());\n");
+      resCode.append("return readHelper" + capName(curClass.getKey()) + "(js, new HashMap<Integer, Object>());\n");
       resCode.append("}\n");
     }
   }

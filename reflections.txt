@@ -1,0 +1,77 @@
+1. Was there any particular type of task you overestimated/underestimated time for?
+Can you say anything about what types of tasks you find especially hard
+to estimate? Do you have any insight into why?
+
+Underestimated:
+The first one is when added support for arrays. In order to do so, I wrote a new singleFiled
+Class and redesigned my overall data structure. The reason I underestimated this is 
+because  while planning, I just assigned the time of each task by instinct, without carefully 
+thinking about the overall implementation of each one. So I just assigned more time for task 
+that I thought would take longer. When I designed the data structure, I thought about 2 options 
+and it turned out that I chose wrong one between them. Back then, I didn’t even realize that 
+the later tasks should affect my decision. 
+The second underestimated task is serialization. The reason is that although my lack of 
+domain knowledge made me realize it would be a difficult task, I just thought “it’s a hard one” 
+and broke it down into four small tasks. However, for each task, I just assigned the normal 
+time for it as I did for previous ones. It turned out that even the breakdown itself is not very 
+thoughtful. I assigned two tasks for the first occurrence and reference of object type, but they 
+should be in one “if-else” statement. I should not separate them.
+In conclusion, my underestimated task is because I just assigned time to each task by
+reading the README, without good planning and thinking about what’s the overall
+Implementation might be for each task.
+
+Overestimated:
+The overestimated tasks is for the arrays. I separated it into: 1-d array field, 1-d array 
+constructor, 1-d array methods and multiple arrays. This separation is redundant and
+I even assigned almost the same time for each one of them. Again, I should really do
+the planning, not just reading the requirement and assigned the time by instinct.
+
+2. How well did you meet your intermediate deadlines?
+
+In the first few days, I stick to the plan. Even though there are tasks that I cannot finish
+right before the deadline, I would finish it before the end of day. However, later on, I put
+my plan aside occasionally due to the overestimation and underestimation in question 1.
+In the process, I found some of my tasks too big or too small, so I made some adjustment.
+Another reason that I failed to meet the deadlines is that I didn’t plan well. I failed to take
+into account the time for other courses, especially 568 which involves the teamwork. As a
+result, sometimes the time my partner and I agreed on conflicted with my plan in 651.
+
+3.Suppose your customer were to change the requirements now. How easy/hard
+would it be to accommodate the following changes. Why are these easy or hard?
+
+I was told in class that I should’t rely too much on Java, and I did make some effort to do
+so. In my CodeBuilder and DeserializerBuilder, I generate different parts of the code 
+separately. I tried not to be language-specific but I think it’s not enough. Sometimes I just
+hard-coded the code into the StringBuilder, which is very hard to read and to change.
+I also repeated some codes in my program (not DRY), which will make it even harder.
+My code is also not OPEN/CLOSED, in order to support new features, I need to rewrite 
+some part of the program.
+
+4.As you have been doing this assignment, you have been learning a lot more about 
+object-oriented design. If you had known at the start what you know now, would you 
+have done anything differently? Would any of the design patterns we learned about 
+in class have worked well in this assignment?
+
+I would spent more time planning. The requirement is long and hard to read, but I should
+not start until I understand it totally. Poor planning leads to less time in the end, which 
+leads to bad design. Right now I repeat many codes, and better design will definitely 
+address this problem.
+I used SINGLE-RESPONSIBILITY: I designed 5 classes in total. Each of them has very 
+simple responsibility(e.g. the DeserializerBuilder is just for the deserialization; the 
+SingleFieldBuilder only handles the info about one field in one class). I didn’t do well
+on DRY and OPEN/CLOSED as mentioned before. The COHESION is high but the 
+COUPLING is not that good, my ClassBuilder dependents on other classes (which also 
+violates DEPENDENCY INVERSION)
+
+5. What lessons did you learn from doing this assignment? How will it inform
+your future software development in this class, other classes, and/or your professional life?
+
+I should start even earlier and spent more time planning and designing. I should also better
+manage my time to achieve the balance between other courses and work. 
+It will inform my future professional life that I should have the ability to break down the long
+customer’s requirement into small tasks. I should not start until fully understand the requirement.
+I should not start without a whole picture of the implementation of different tasks.
+
+
+
+

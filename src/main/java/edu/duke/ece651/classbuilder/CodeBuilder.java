@@ -14,7 +14,7 @@ public class CodeBuilder {
   private boolean hasNoField;
   private boolean hasNoArray;
 
-  //Constructor for CodeBuilder
+  //Constructor for CodeBuilde
   public CodeBuilder(String name, ArrayList<SingleFieldBuilder> list, String pkgName) {
     this.className = name;
     this.packageName = pkgName;
