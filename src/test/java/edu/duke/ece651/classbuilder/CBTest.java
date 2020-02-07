@@ -31,7 +31,7 @@ public class CBTest {
     InputStream r = getClass().getResourceAsStream("/empty.json");
     ClassBuilder cb = new ClassBuilder(r);
     //cb.createAllClasses("/home/jaryn/ece651-hwk1-tester/src/main/java");
-    cb.createAllClasses("src/test/resources/create_results");
+    cb.createAllClasses("src/test/resources/create_results/1");
   }
   
   @Test
